@@ -97,11 +97,13 @@ Before contributing, please ensure that:
 * Existing formatting standards are maintained.
 * Major structural changes are documented.
 
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/DatabaseSchema.md`](docs/DatabaseSchema.md) for the full contribution workflow and data schema.
+
 ---
 
 ## Project Status
 
-Current Version: **v0.1.0**
+Current Version: **v0.2.0**
 
 Current Phase: **Foundation**
 
