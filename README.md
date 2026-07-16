@@ -103,7 +103,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/DatabaseSchema.md`](docs/Dat
 
 ## Project Status
 
-Current Version: **v0.2.0**
+Current Version: **v0.3.0**
 
 Current Phase: **Foundation**
 

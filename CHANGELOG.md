@@ -6,6 +6,18 @@ This project follows Semantic Versioning (`MAJOR.MINOR.PATCH`).
 
 ---
 
+## [0.3.0] - 2026-07-16
+
+### Added
+
+* First 23 verified records across all 8 categories in `database/AcademicAtlas.xlsx`: IMO, IPhO, IChO, IOI, IBO, Regeneron ISEF, John Locke Institute Essay Competition, World Scholar's Cup, RSI, MIT PRIMES, Simons Summer Research Program, Summer Science Program, Yale Young Global Scholars, MITES, Davis UWC Scholars Program, QuestBridge National College Match, Johns Hopkins CTY, Stanford Online High School, Conrad Challenge, Technovation Girls, The Concord Review, Journal of Student Research, Harvard Model United Nations
+
+### Notes
+
+Stable fields (Name, Organizer, Official_URL, Category, Country_Region, Format) were verified against each program's official website. `Application_Deadline` and `Event_Dates` are intentionally left as `UNKNOWN` since these change annually — see each record's `Notes` field for guidance on checking the current cycle.
+
+---
+
 ## [0.2.0] - 2026-07-16
 
 ### Added
