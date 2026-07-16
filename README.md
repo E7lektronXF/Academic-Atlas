@@ -8,6 +8,8 @@ Rather than being a simple list of competitions or programs, Academic Atlas aims
 
 The project focuses on quality over quantity and prioritizes official, up-to-date, and well-documented information.
 
+**Browse the database:** https://e7lektronxf.github.io/Academic-Atlas/
+
 ---
 
 ## What is included?
@@ -61,12 +63,18 @@ academic-atlas/
 README.md
 CHANGELOG.md
 AI_CONTEXT.md
+CONTRIBUTING.md
 
 database/
     AcademicAtlas.xlsx
 
-docs/
+docs/                     (also serves as the GitHub Pages website)
     DatabaseSchema.md
+    index.html, style.css, app.js
+    data.json             (generated from AcademicAtlas.xlsx)
+
+scripts/
+    xlsx_to_json.py       (regenerates docs/data.json)
 ```
 
 The structure may evolve as the project grows, but simplicity and maintainability will always be prioritized.
@@ -103,7 +111,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/DatabaseSchema.md`](docs/Dat
 
 ## Project Status
 
-Current Version: **v0.3.0**
+Current Version: **v0.4.0**
 
 Current Phase: **Foundation**
 

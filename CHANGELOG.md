@@ -6,6 +6,21 @@ This project follows Semantic Versioning (`MAJOR.MINOR.PATCH`).
 
 ---
 
+## [0.4.0] - 2026-07-16
+
+### Added
+
+* `docs/data.json` — machine-readable export of the database, generated from `AcademicAtlas.xlsx`
+* `scripts/xlsx_to_json.py` — regenerates `docs/data.json` from the spreadsheet
+* `docs/index.html`, `docs/style.css`, `docs/app.js` — a static, searchable/filterable website for browsing the database, intended to be served via GitHub Pages from `/docs`
+* CONTRIBUTING and PR checklist items requiring `docs/data.json` to be regenerated after spreadsheet edits
+
+### Notes
+
+`database/AcademicAtlas.xlsx` remains the single source of truth; `docs/data.json` is a generated artifact and should not be hand-edited. GitHub Pages must be enabled in repository settings (Settings → Pages → Source: Deploy from branch → `main` / `docs`) for the site to go live.
+
+---
+
 ## [0.3.0] - 2026-07-16
 
 ### Added

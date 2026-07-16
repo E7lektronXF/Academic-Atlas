@@ -23,3 +23,4 @@
 - [ ] `Last_Verified` is set to today's date.
 - [ ] No existing verified rows were removed or altered without justification.
 - [ ] Column order was not changed (unless this PR is a documented structural change).
+- [ ] `docs/data.json` was regenerated via `python scripts/xlsx_to_json.py` after editing the spreadsheet.

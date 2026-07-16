@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Atlas</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <h1>Academic Atlas</h1>
+    <p>An open, AI-maintainable database of international academic opportunities.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="controls">
+    <input type="search" id="search" placeholder="Search by name, organizer, or keyword..." aria-label="Search opportunities">
+
+    <select id="category-filter" aria-label="Filter by category">
+      <option value="">All categories</option>
+    </select>
+
+    <select id="format-filter" aria-label="Filter by format">
+      <option value="">All formats</option>
+    </select>
+
+    <select id="status-filter" aria-label="Filter by status">
+      <option value="">All statuses</option>
+    </select>
+  </section>
+
+  <p id="result-count" class="result-count"></p>
+
+  <div id="cards" class="cards"></div>
+  <p id="empty-state" class="empty-state" hidden>No opportunities match your filters.</p>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>
+      Data sourced from official program websites. Deadlines and event dates change annually —
+      always confirm on the official site linked in each entry.
+    </p>
+    <p>
+      <a href="https://github.com/E7lektronXF/Academic-Atlas">View on GitHub</a> ·
+      <a href="https://github.com/E7lektronXF/Academic-Atlas/blob/main/CONTRIBUTING.md">Contribute</a> ·
+      <a href="https://github.com/E7lektronXF/Academic-Atlas/blob/main/docs/DatabaseSchema.md">Schema</a>
+    </p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
