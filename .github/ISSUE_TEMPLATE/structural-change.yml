@@ -1,0 +1,26 @@
+name: Structural Change Proposal
+description: Propose a change to the schema itself (new column, category, or ID prefix).
+title: "[Structural Change]: "
+labels: ["structural-change"]
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Change
+      description: What are you proposing to add, rename, or restructure in docs/DatabaseSchema.md?
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why is this needed?
+      description: What problem does this solve, or what new category of data does it support?
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact on Existing Records
+      description: Does this require changes to existing rows in AcademicAtlas.xlsx? If so, how should the migration be handled without being destructive?
+    validations:
+      required: false

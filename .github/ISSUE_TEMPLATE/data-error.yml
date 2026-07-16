@@ -1,0 +1,38 @@
+name: Data Error Report
+description: Report incorrect, outdated, or unverifiable information in the database.
+title: "[Data Error]: "
+labels: ["data-error"]
+body:
+  - type: input
+    id: record-id
+    attributes:
+      label: Record ID
+      description: The ID of the affected record, e.g. COMP-0001 (see the ID column in AcademicAtlas.xlsx).
+    validations:
+      required: true
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      options:
+        - Outdated information (e.g. deadline passed, program discontinued)
+        - Incorrect information
+        - Broken/dead official source link
+        - Duplicate record
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What is wrong, and what should it be instead?
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Supporting Source
+      description: Link to an official source confirming the correction, if available.
+    validations:
+      required: false

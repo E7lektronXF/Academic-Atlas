@@ -1,0 +1,49 @@
+name: New Opportunity Suggestion
+description: Suggest an academic opportunity to be added to the database.
+title: "[New Opportunity]: "
+labels: ["new-opportunity"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Opportunity Name
+      description: Official name of the competition, program, scholarship, etc.
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - International competitions
+        - Research programs / opportunities
+        - Summer schools
+        - Scholarships
+        - Academic courses
+        - Innovation challenges
+        - Academic journals & publications
+        - Conferences & academic events
+        - Other (explain in notes)
+    validations:
+      required: true
+  - type: input
+    id: official-url
+    attributes:
+      label: Official Source URL
+      description: Link to the organizer's or university's official page (not a third-party aggregator).
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Known Details
+      description: Anything you already know — eligibility, deadline, cost, format, dates. Use "UNKNOWN" for anything not confirmed by the official source.
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have verified this against an official source (not a third-party list).
+          required: true
