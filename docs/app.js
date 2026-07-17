@@ -1,199 +1,420 @@
+"use strict";
+
+// ---------------------------------------------------------------------------
+// Academic Atlas — progressive-disclosure browser.
+// Home view shows category tiles (no wall of cards); picking a category or
+// searching opens a paginated browse view; clicking a card opens a detail
+// panel. All state lives in the URL so any view is shareable.
+// ---------------------------------------------------------------------------
+
+const PAGE_SIZE = 9;
+
+// Icon + accent per category (accent matches the badge colors in style.css).
+const CATEGORY_META = {
+  "International competitions":            { icon: "🏆", color: "#d97706", blurb: "Olympiads, essay prizes, and global contests." },
+  "Research programs / opportunities":    { icon: "🔬", color: "#2563eb", blurb: "Mentored research and academic institutes." },
+  "Summer schools":                       { icon: "☀️", color: "#ea580c", blurb: "Intensive residential summer programs." },
+  "Scholarships":                         { icon: "🎓", color: "#16a34a", blurb: "Funding and full-ride awards." },
+  "Academic courses":                     { icon: "📚", color: "#7c3aed", blurb: "Structured courses and online learning." },
+  "Innovation challenges":                { icon: "💡", color: "#db2777", blurb: "Entrepreneurship and design challenges." },
+  "Academic journals & publications":     { icon: "📰", color: "#0891b2", blurb: "Publish your original research." },
+  "Conferences & academic events":        { icon: "🎤", color: "#ca8a04", blurb: "Conferences, summits, and MUNs." },
+};
+const CATEGORY_ORDER = Object.keys(CATEGORY_META);
+
 const state = {
   records: [],
-  search: "",
+  q: "",
   category: "",
   format: "",
   status: "",
-  sort: "name",
+  sort: "deadline",
+  id: "",
+  shown: PAGE_SIZE,
 };
 
-const el = {
-  cards: document.getElementById("cards"),
-  emptyState: document.getElementById("empty-state"),
-  errorState: document.getElementById("error-state"),
-  resultCount: document.getElementById("result-count"),
-  search: document.getElementById("search"),
-  categoryFilter: document.getElementById("category-filter"),
-  formatFilter: document.getElementById("format-filter"),
-  statusFilter: document.getElementById("status-filter"),
-  sort: document.getElementById("sort"),
-  clearBtn: document.getElementById("clear-filters"),
-};
+const el = {};
+["home-view","browse-view","closing-soon","closing-soon-cards","category-grid",
+ "browse-title","result-count","cards","empty-state","error-state","load-more",
+ "search","format-filter","status-filter","sort","clear-filters",
+ "detail-backdrop","detail-panel","detail-body","detail-close"].forEach((id) => {
+  el[id] = document.getElementById(id);
+});
 
-// Which state keys map to which URL query params, so filtered views are shareable.
-const URL_KEYS = {
-  q: "search",
-  category: "category",
-  format: "format",
-  status: "status",
-  sort: "sort",
-};
-
-function populateFilter(selectEl, values) {
-  [...values]
-    .filter(Boolean)
-    .sort()
-    .forEach((value) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = value;
-      selectEl.appendChild(option);
-    });
-}
-
-function matchesFilters(record) {
-  const q = state.search.trim().toLowerCase();
-  const matchesSearch =
-    !q ||
-    [record.Name, record.Organizer, record.Description, record.Category, record.Country_Region]
-      .filter(Boolean)
-      .some((field) => String(field).toLowerCase().includes(q));
-
-  const matchesCategory = !state.category || record.Category === state.category;
-  const matchesFormat = !state.format || record.Format === state.format;
-  const matchesStatus = !state.status || record.Status === state.status;
-
-  return matchesSearch && matchesCategory && matchesFormat && matchesStatus;
-}
-
-const SORTERS = {
-  name: (a, b) => String(a.Name).localeCompare(String(b.Name)),
-  category: (a, b) =>
-    String(a.Category).localeCompare(String(b.Category)) ||
-    String(a.Name).localeCompare(String(b.Name)),
-  // Most recently verified first; unknown/invalid dates sink to the bottom.
-  verified: (a, b) => (b._verifiedTime || 0) - (a._verifiedTime || 0),
-};
-
-// Human-friendly "verified N days ago", plus a stale flag for old entries.
-function freshness(lastVerified) {
-  const time = Date.parse(lastVerified);
-  if (Number.isNaN(time)) return null;
-  const days = Math.floor((Date.now() - time) / 86_400_000);
-  let text;
-  if (days <= 0) text = "verified today";
-  else if (days === 1) text = "verified 1 day ago";
-  else if (days < 30) text = `verified ${days} days ago`;
-  else if (days < 60) text = "verified 1 month ago";
-  else if (days < 365) text = `verified ${Math.floor(days / 30)} months ago`;
-  else text = `verified over a year ago`;
-  return { text, stale: days > 180 };
-}
-
-// Only render links we trust; block javascript:/data: and other schemes.
-function safeUrl(value) {
-  const url = String(value ?? "").trim();
-  return /^https?:\/\//i.test(url) ? url : "";
-}
-
-function metaChip(label, value) {
-  if (!value || value === "UNKNOWN") return "";
-  return `<span><span class="meta-key">${escapeHtml(label)}:</span> ${escapeHtml(value)}</span>`;
-}
-
-function render() {
-  const filtered = state.records.filter(matchesFilters);
-  filtered.sort(SORTERS[state.sort] || SORTERS.name);
-
-  el.cards.innerHTML = "";
-  const fragment = document.createDocumentFragment();
-
-  filtered.forEach((record) => {
-    const card = document.createElement("article");
-    card.className = "card";
-
-    const fresh = freshness(record.Last_Verified);
-    const url = safeUrl(record.Official_URL);
-    const link = url
-      ? `<a class="official-link" href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer">Official source ↗</a>`
-      : "";
-    const notes = record.Notes && record.Notes !== "UNKNOWN"
-      ? `<details class="notes"><summary>Notes</summary><p>${escapeHtml(record.Notes)}</p></details>`
-      : "";
-
-    card.innerHTML = `
-      <div class="card-top">
-        <h2>${escapeHtml(record.Name)}</h2>
-        <span class="badge" data-category="${escapeAttr(record.Category)}">${escapeHtml(record.Category)}</span>
-      </div>
-      <p class="organizer">${escapeHtml(record.Organizer)} · ${escapeHtml(record.Country_Region)}</p>
-      <p class="eligibility"><span class="meta-key">Eligibility:</span> ${escapeHtml(record.Eligibility)}</p>
-      <p class="description">${escapeHtml(record.Description)}</p>
-      <div class="meta-row">
-        ${metaChip("Format", record.Format)}
-        ${metaChip("Cost", record.Cost)}
-        ${metaChip("Status", record.Status)}
-        ${metaChip("Deadline", record.Application_Deadline)}
-        ${metaChip("Dates", record.Event_Dates)}
-      </div>
-      ${notes}
-      <div class="card-footer">
-        ${link}
-        ${fresh ? `<span class="freshness${fresh.stale ? " stale" : ""}">${escapeHtml(fresh.text)}</span>` : ""}
-      </div>
-    `;
-    fragment.appendChild(card);
-  });
-
-  el.cards.appendChild(fragment);
-  el.emptyState.hidden = filtered.length !== 0;
-  el.resultCount.textContent = `${filtered.length} of ${state.records.length} opportunities`;
-
-  const filtersActive = Boolean(
-    state.search || state.category || state.format || state.status
-  );
-  el.clearBtn.hidden = !filtersActive;
-
-  writeUrl();
-}
+// --- helpers ----------------------------------------------------------------
 
 function escapeHtml(value) {
   const div = document.createElement("div");
   div.textContent = value ?? "";
   return div.innerHTML;
 }
-
 function escapeAttr(value) {
   return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/"/g, "&quot;")
-    .replace(/</g, "&lt;");
+    .replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+function safeUrl(value) {
+  const url = String(value ?? "").trim();
+  return /^https?:\/\//i.test(url) ? url : "";
+}
+function has(value) {
+  return value && value !== "UNKNOWN";
 }
 
-// --- URL <-> state sync -----------------------------------------------------
+const DAY = 86_400_000;
+
+// Parse Application_Deadline into a structured shape used for pills + sorting.
+function deadlineInfo(record) {
+  const raw = String(record.Application_Deadline ?? "").trim();
+  if (raw === "Rolling") return { kind: "rolling", sortKey: 2e12 };
+  const time = Date.parse(raw);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(raw) || Number.isNaN(time)) {
+    return { kind: "unknown", sortKey: 3e12 }; // unknowns sink below rolling
+  }
+  const days = Math.ceil((time - Date.now()) / DAY);
+  return { kind: days < 0 ? "past" : "future", raw, days, sortKey: time };
+}
+
+function fmtDate(iso) {
+  const d = new Date(iso + "T00:00:00");
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+// Colored deadline pill (urgency-aware).
+function deadlinePill(record) {
+  const info = deadlineInfo(record);
+  if (info.kind === "rolling") return pill("open", "🟢 Rolling — open now");
+  if (info.kind === "unknown") return pill("neutral", "🗓 Next cycle — see notes");
+  if (info.kind === "past") return pill("neutral", `Closed ${fmtDate(info.raw)}`);
+  const d = info.days;
+  const label = d === 0 ? "due today" : `${d} day${d === 1 ? "" : "s"} left`;
+  const tone = d <= 30 ? "urgent" : d <= 90 ? "soon" : "ok";
+  return pill(tone, `⏳ ${fmtDate(info.raw)} · ${label}`);
+}
+
+function pill(tone, text) {
+  return `<span class="pill pill-${tone}">${escapeHtml(text)}</span>`;
+}
+
+function costPill(record) {
+  if (!has(record.Cost)) return "";
+  const isFree = /^free/i.test(record.Cost);
+  return pill(isFree ? "free" : "cost", (isFree ? "✓ " : "💲 ") + record.Cost);
+}
+function formatPill(record) {
+  if (!has(record.Format)) return "";
+  const map = { Online: "online", "In-person": "inperson", Hybrid: "hybrid" };
+  return pill(map[record.Format] || "neutral", record.Format);
+}
+function statusPill(record) {
+  if (!has(record.Status)) return "";
+  const map = { Active: "active", Upcoming: "upcoming", Archived: "archived" };
+  return pill(map[record.Status] || "neutral", record.Status);
+}
+
+function freshness(record) {
+  const time = Date.parse(record.Last_Verified);
+  if (Number.isNaN(time)) return null;
+  const days = Math.floor((Date.now() - time) / DAY);
+  let text;
+  if (days <= 0) text = "verified today";
+  else if (days === 1) text = "verified 1 day ago";
+  else if (days < 30) text = `verified ${days} days ago`;
+  else if (days < 60) text = "verified 1 month ago";
+  else if (days < 365) text = `verified ${Math.floor(days / 30)} months ago`;
+  else text = "verified over a year ago";
+  return { text, stale: days > 180 };
+}
+
+// --- filtering & sorting ----------------------------------------------------
+
+function matchesFilters(r) {
+  const q = state.q.trim().toLowerCase();
+  const matchesSearch = !q ||
+    [r.Name, r.Organizer, r.Description, r.Category, r.Country_Region, r.Eligibility]
+      .filter(Boolean).some((f) => String(f).toLowerCase().includes(q));
+  return matchesSearch &&
+    (!state.category || r.Category === state.category) &&
+    (!state.format || r.Format === state.format) &&
+    (!state.status || r.Status === state.status);
+}
+
+const SORTERS = {
+  deadline: (a, b) => deadlineInfo(a).sortKey - deadlineInfo(b).sortKey ||
+                      String(a.Name).localeCompare(String(b.Name)),
+  name: (a, b) => String(a.Name).localeCompare(String(b.Name)),
+  category: (a, b) => String(a.Category).localeCompare(String(b.Category)) ||
+                      String(a.Name).localeCompare(String(b.Name)),
+  verified: (a, b) => (b._verifiedTime || 0) - (a._verifiedTime || 0),
+};
+
+function currentResults() {
+  return state.records.filter(matchesFilters).sort(SORTERS[state.sort] || SORTERS.deadline);
+}
+
+// --- card + detail markup ---------------------------------------------------
+
+function categoryBadge(category) {
+  const meta = CATEGORY_META[category] || {};
+  return `<span class="badge" data-category="${escapeAttr(category)}">${escapeHtml((meta.icon ? meta.icon + " " : "") + category)}</span>`;
+}
+
+function cardHtml(r) {
+  return `
+    <article class="card" role="button" tabindex="0" data-id="${escapeAttr(r.ID)}"
+             aria-label="${escapeAttr(r.Name)} — view details">
+      <div class="card-top">
+        <h3>${escapeHtml(r.Name)}</h3>
+        ${categoryBadge(r.Category)}
+      </div>
+      <p class="organizer">${escapeHtml(r.Organizer)} · ${escapeHtml(r.Country_Region)}</p>
+      <p class="description">${escapeHtml(r.Description)}</p>
+      <div class="pill-row">
+        ${deadlinePill(r)}
+        ${formatPill(r)}
+        ${costPill(r)}
+      </div>
+      <span class="card-cue">View details →</span>
+    </article>`;
+}
+
+function detailRow(label, value, cls) {
+  if (!has(value)) return "";
+  return `<div class="d-row ${cls || ""}">
+      <span class="d-label">${escapeHtml(label)}</span>
+      <span class="d-value">${escapeHtml(value)}</span>
+    </div>`;
+}
+
+function detailHtml(r) {
+  const url = safeUrl(r.Official_URL);
+  const fresh = freshness(r);
+  const link = url
+    ? `<a class="detail-link" href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer">Visit official source ↗</a>`
+    : "";
+  const notes = has(r.Notes)
+    ? `<div class="detail-notes"><span class="d-label">Notes</span><p>${escapeHtml(r.Notes)}</p></div>` : "";
+  return `
+    <div class="detail-head">
+      ${categoryBadge(r.Category)}
+      <h2 id="detail-title">${escapeHtml(r.Name)}</h2>
+      <p class="detail-org">${escapeHtml(r.Organizer)} · ${escapeHtml(r.Country_Region)}</p>
+    </div>
+    <div class="detail-pills">
+      ${deadlinePill(r)} ${statusPill(r)} ${formatPill(r)} ${costPill(r)}
+    </div>
+    <p class="detail-desc">${escapeHtml(r.Description)}</p>
+    <div class="detail-grid">
+      ${detailRow("Eligibility", r.Eligibility, "d-eligibility")}
+      ${detailRow("Application deadline", has(r.Application_Deadline) ? r.Application_Deadline : "", "d-deadline")}
+      ${detailRow("Event dates", r.Event_Dates, "d-dates")}
+      ${detailRow("Cost", r.Cost, "d-cost")}
+      ${detailRow("Format", r.Format, "d-format")}
+      ${detailRow("Status", r.Status, "d-status")}
+    </div>
+    ${notes}
+    <div class="detail-footer">
+      ${link}
+      ${fresh ? `<span class="freshness${fresh.stale ? " stale" : ""}">${escapeHtml(fresh.text)} · ${escapeHtml(r.ID)}</span>` : ""}
+    </div>`;
+}
+
+// --- rendering --------------------------------------------------------------
+
+function render() {
+  el["error-state"].hidden = true;
+  const browsing = Boolean(state.q || state.category || state.format || state.status);
+  if (browsing) renderBrowse(); else renderHome();
+  renderDetail();
+}
+
+function renderHome() {
+  el["browse-view"].hidden = true;
+  el["home-view"].hidden = false;
+
+  // Category tiles with live counts.
+  const counts = {};
+  state.records.forEach((r) => { counts[r.Category] = (counts[r.Category] || 0) + 1; });
+  el["category-grid"].innerHTML = CATEGORY_ORDER.map((cat) => {
+    const meta = CATEGORY_META[cat];
+    const n = counts[cat] || 0;
+    return `<a class="cat-tile" href="?category=${encodeURIComponent(cat)}" style="--cat:${meta.color}">
+        <span class="cat-icon" aria-hidden="true">${meta.icon}</span>
+        <span class="cat-name">${escapeHtml(cat)}</span>
+        <span class="cat-blurb">${escapeHtml(meta.blurb)}</span>
+        <span class="cat-count">${n} ${n === 1 ? "opportunity" : "opportunities"}</span>
+      </a>`;
+  }).join("");
+
+  // "Closing soon": nearest upcoming concrete deadlines (max 3).
+  const soon = state.records
+    .map((r) => ({ r, info: deadlineInfo(r) }))
+    .filter((x) => x.info.kind === "future")
+    .sort((a, b) => a.info.sortKey - b.info.sortKey)
+    .slice(0, 3);
+  if (soon.length) {
+    el["closing-soon"].hidden = false;
+    el["closing-soon-cards"].innerHTML = soon.map((x) => cardHtml(x.r)).join("");
+  } else {
+    el["closing-soon"].hidden = true;
+  }
+}
+
+function renderBrowse() {
+  el["home-view"].hidden = true;
+  el["browse-view"].hidden = false;
+
+  const results = currentResults();
+  const title = state.category
+    ? `${CATEGORY_META[state.category]?.icon || ""} ${state.category}`.trim()
+    : state.q ? `Search: “${state.q}”` : "All opportunities";
+  el["browse-title"].textContent = title;
+
+  const slice = results.slice(0, state.shown);
+  el["cards"].innerHTML = slice.map(cardHtml).join("");
+  el["empty-state"].hidden = results.length !== 0;
+  el["result-count"].textContent =
+    `${results.length} ${results.length === 1 ? "opportunity" : "opportunities"}` +
+    (results.length > slice.length ? ` · showing ${slice.length}` : "");
+
+  el["load-more"].hidden = results.length <= slice.length;
+
+  const filtersActive = Boolean(state.q || state.format || state.status);
+  el["clear-filters"].hidden = !filtersActive;
+}
+
+function renderDetail() {
+  const record = state.id ? state.records.find((r) => r.ID === state.id) : null;
+  if (!record) { closeDetail(false); return; }
+  el["detail-body"].innerHTML = detailHtml(record);
+  el["detail-backdrop"].hidden = false;
+  document.body.classList.add("no-scroll");
+  el["detail-panel"].focus();
+}
+
+function closeDetail(updateUrl = true) {
+  el["detail-backdrop"].hidden = true;
+  document.body.classList.remove("no-scroll");
+  if (updateUrl && state.id) {
+    state.id = "";
+    writeUrl();
+  }
+}
+
+// --- URL <-> state ----------------------------------------------------------
 
 function readUrl() {
-  const params = new URLSearchParams(location.search);
-  for (const [param, key] of Object.entries(URL_KEYS)) {
-    if (params.has(param)) state[key] = params.get(param);
-  }
-  if (!SORTERS[state.sort]) state.sort = "name";
+  const p = new URLSearchParams(location.search);
+  state.q = p.get("q") || "";
+  state.category = p.get("category") || "";
+  state.format = p.get("format") || "";
+  state.status = p.get("status") || "";
+  state.sort = SORTERS[p.get("sort")] ? p.get("sort") : "deadline";
+  state.id = p.get("id") || "";
+  state.shown = PAGE_SIZE;
 }
 
-function writeUrl() {
-  const params = new URLSearchParams();
-  for (const [param, key] of Object.entries(URL_KEYS)) {
-    const value = state[key];
-    if (value && !(param === "sort" && value === "name")) params.set(param, value);
-  }
-  const query = params.toString();
-  history.replaceState(null, "", query ? `?${query}` : location.pathname);
+function writeUrl(push = false) {
+  const p = new URLSearchParams();
+  if (state.q) p.set("q", state.q);
+  if (state.category) p.set("category", state.category);
+  if (state.format) p.set("format", state.format);
+  if (state.status) p.set("status", state.status);
+  if (state.sort && state.sort !== "deadline") p.set("sort", state.sort);
+  if (state.id) p.set("id", state.id);
+  const qs = p.toString();
+  const url = qs ? `?${qs}` : location.pathname;
+  if (push) history.pushState(null, "", url);
+  else history.replaceState(null, "", url);
 }
 
-function syncControlsFromState() {
-  el.search.value = state.search;
-  el.categoryFilter.value = state.category;
-  el.formatFilter.value = state.format;
-  el.statusFilter.value = state.status;
-  el.sort.value = state.sort;
+function syncControls() {
+  el["search"].value = state.q;
+  el["format-filter"].value = state.format;
+  el["status-filter"].value = state.status;
+  el["sort"].value = state.sort;
 }
 
 function debounce(fn, delay) {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => fn(...args), delay);
-  };
+  let t;
+  return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), delay); };
+}
+
+function populate(selectEl, values) {
+  [...values].filter(Boolean).sort().forEach((v) => {
+    const o = document.createElement("option");
+    o.value = v; o.textContent = v; selectEl.appendChild(o);
+  });
+}
+
+// --- events -----------------------------------------------------------------
+
+function openDetailById(id) {
+  state.id = id;
+  writeUrl(true);
+  renderDetail();
+}
+
+function wireEvents() {
+  el["search"].addEventListener("input", debounce((e) => {
+    state.q = e.target.value; state.shown = PAGE_SIZE; writeUrl(); render();
+  }, 150));
+
+  el["format-filter"].addEventListener("change", (e) => {
+    state.format = e.target.value; state.shown = PAGE_SIZE; writeUrl(); render();
+  });
+  el["status-filter"].addEventListener("change", (e) => {
+    state.status = e.target.value; state.shown = PAGE_SIZE; writeUrl(); render();
+  });
+  el["sort"].addEventListener("change", (e) => {
+    state.sort = e.target.value; writeUrl(); render();
+  });
+  el["clear-filters"].addEventListener("click", () => {
+    state.q = state.format = state.status = ""; state.shown = PAGE_SIZE;
+    syncControls(); writeUrl(); render();
+  });
+  el["load-more"].addEventListener("click", () => {
+    state.shown += PAGE_SIZE; renderBrowse();
+  });
+
+  // Card click / keyboard (event delegation across both card containers).
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (link && link.matches(".cat-tile, .brand, .crumbs a")) {
+      e.preventDefault();
+      navigateTo(link.getAttribute("href"));
+      return;
+    }
+    const card = e.target.closest(".card[data-id]");
+    if (card) openDetailById(card.dataset.id);
+  });
+  el["cards"].addEventListener("keydown", cardKeydown);
+  el["closing-soon-cards"].addEventListener("keydown", cardKeydown);
+
+  // Detail dismissal.
+  el["detail-close"].addEventListener("click", () => closeDetail());
+  el["detail-backdrop"].addEventListener("click", (e) => {
+    if (e.target === el["detail-backdrop"]) closeDetail();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !el["detail-backdrop"].hidden) closeDetail();
+  });
+
+  window.addEventListener("popstate", () => { readUrl(); syncControls(); render(); });
+}
+
+function cardKeydown(e) {
+  const card = e.target.closest(".card[data-id]");
+  if (card && (e.key === "Enter" || e.key === " ")) {
+    e.preventDefault();
+    openDetailById(card.dataset.id);
+  }
+}
+
+function navigateTo(href) {
+  const url = new URL(href, location.href);
+  history.pushState(null, "", url.pathname + url.search);
+  readUrl(); syncControls(); render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // --- init -------------------------------------------------------------------
@@ -201,58 +422,26 @@ function debounce(fn, delay) {
 async function init() {
   let records;
   try {
-    const response = await fetch("data.json");
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    records = await response.json();
+    const res = await fetch("data.json");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    records = await res.json();
   } catch (err) {
     console.error("Failed to load data.json:", err);
-    el.errorState.hidden = false;
-    el.resultCount.textContent = "";
+    el["home-view"].hidden = true;
+    el["browse-view"].hidden = true;
+    el["error-state"].hidden = false;
     return;
   }
 
-  // Precompute verification timestamps once for the "recently verified" sort.
-  records.forEach((r) => {
-    r._verifiedTime = Date.parse(r.Last_Verified) || 0;
-  });
+  records.forEach((r) => { r._verifiedTime = Date.parse(r.Last_Verified) || 0; });
   state.records = records;
 
-  populateFilter(el.categoryFilter, new Set(records.map((r) => r.Category)));
-  populateFilter(el.formatFilter, new Set(records.map((r) => r.Format)));
-  populateFilter(el.statusFilter, new Set(records.map((r) => r.Status)));
+  populate(el["format-filter"], new Set(records.map((r) => r.Format)));
+  populate(el["status-filter"], new Set(records.map((r) => r.Status)));
 
   readUrl();
-  syncControlsFromState();
-
-  el.search.addEventListener(
-    "input",
-    debounce((e) => {
-      state.search = e.target.value;
-      render();
-    }, 150)
-  );
-  el.categoryFilter.addEventListener("change", (e) => {
-    state.category = e.target.value;
-    render();
-  });
-  el.formatFilter.addEventListener("change", (e) => {
-    state.format = e.target.value;
-    render();
-  });
-  el.statusFilter.addEventListener("change", (e) => {
-    state.status = e.target.value;
-    render();
-  });
-  el.sort.addEventListener("change", (e) => {
-    state.sort = e.target.value;
-    render();
-  });
-  el.clearBtn.addEventListener("click", () => {
-    state.search = state.category = state.format = state.status = "";
-    syncControlsFromState();
-    render();
-  });
-
+  syncControls();
+  wireEvents();
   render();
 }
 

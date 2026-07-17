@@ -6,6 +6,26 @@ This project follows Semantic Versioning (`MAJOR.MINOR.PATCH`).
 
 ---
 
+## [0.6.0] - 2026-07-17
+
+### Added
+
+* 13 new verified opportunities (23 → 36 records), spread across categories: Regeneron Science Talent Search, Breakthrough Junior Challenge, Diamond Challenge, GENIUS Olympiad, Coca-Cola Scholars Program, The Gates Scholarship, PROMYS, Ross Mathematics Program, COSMOS, Journal of Emerging Investigators, National High School Journal of Science, Pioneer Academics, and Harvard CS50x. Each was verified against its official website.
+* Real `Application_Deadline` values for opportunities whose next cycle is officially published: Concord Review (2026-08-01), Breakthrough Junior Challenge (2026-09-15), The Gates Scholarship (2026-09-15), Coca-Cola Scholars (2026-09-30), QuestBridge National College Match (2026-10-01), and Regeneron STS (2026-11-05). For programs that announce dates later (RSI, MIT PRIMES, John Locke, Conrad Challenge, PROMYS, Ross, COSMOS), the recurring cycle timing is documented in `Notes` and the deadline is left `UNKNOWN` rather than guessed.
+* Website: a **progressive-disclosure** interface — the home page now shows category tiles (with live counts) plus a small "Closing soon" strip instead of a wall of cards. Picking a category or searching opens a paginated browse view ("Load more", 9 at a time), and clicking any card opens a detail panel with the full record.
+* Website: a full opportunity **detail view** (modal) showing every field, with a deep-linkable `?id=` URL.
+
+### Changed
+
+* Website typography and readability: added the Inter (body) and Fraunces (display) fonts, and colour-coded information as pills — deadline urgency (red/amber/blue), free vs. paid cost, format, and status — so records are easier to scan.
+* Website sort now defaults to **Deadline (soonest first)**; all views remain shareable via URL query parameters.
+
+### Notes
+
+`database/AcademicAtlas.xlsx` remains the single source of truth; `docs/data.json` was regenerated with `scripts/xlsx_to_json.py` and passes `scripts/validate.py`.
+
+---
+
 ## [0.5.0] - 2026-07-17
 
 ### Added
