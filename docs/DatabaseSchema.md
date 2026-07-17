@@ -4,6 +4,8 @@ This document defines the structure of `database/AcademicAtlas.xlsx`. It is the 
 
 Changes to this schema are structural changes and must follow the maintenance philosophy in `AI_CONTEXT.md`: incremental, documented, and non-destructive.
 
+The rules below are enforced automatically by `scripts/validate.py` (run locally and in CI). Run `python scripts/validate.py` before committing; a failing check will block the change.
+
 ---
 
 ## Identifier Convention

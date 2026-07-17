@@ -6,6 +6,28 @@ This project follows Semantic Versioning (`MAJOR.MINOR.PATCH`).
 
 ---
 
+## [0.5.0] - 2026-07-17
+
+### Added
+
+* `scripts/validate.py` — schema validator that checks `AcademicAtlas.xlsx` against `docs/DatabaseSchema.md`: ID format/uniqueness and prefix-to-category consistency, required columns, `Category`/`Format`/`Status` enums, date formats for `Application_Deadline` and `Last_Verified` (including a no-future-date check), and `Official_URL` scheme. Exits non-zero on any error.
+* `.github/workflows/data-check.yml` — CI that runs the validator and verifies `docs/data.json` was regenerated from the spreadsheet (drift detection) on every push and pull request touching the data.
+* Website (`docs/`): sort control (name / category / recently verified), a "Clear filters" button, and shareable/bookmarkable views via URL query parameters (`?q=&category=&format=&status=&sort=`).
+* Website cards now surface more of the schema: `Eligibility`, `Application_Deadline`, `Event_Dates`, a relative `Last_Verified` freshness label (with a "stale" flag past 180 days), and `Notes` in an expandable section.
+
+### Changed
+
+* `docs/index.html` — added SEO/meta description, Open Graph/Twitter link-preview tags, a favicon, a `<noscript>` fallback, and `aria-live` on the result count.
+* `docs/app.js` — debounced search, graceful data-load error handling, and hardened `Official_URL` rendering (only `http(s)` links are emitted, blocking `javascript:`/`data:` URLs).
+* `scripts/requirements.txt` — pinned `openpyxl==3.1.5` for reproducible builds.
+* `CONTRIBUTING.md` — contribution workflow and PR checklist now include the `python scripts/validate.py` step.
+
+### Notes
+
+No database records were added, removed, or modified in this release; `database/AcademicAtlas.xlsx` is unchanged. GitHub Pages continues to deploy from the `main` branch `/docs` folder as before.
+
+---
+
 ## [0.4.0] - 2026-07-16
 
 ### Added

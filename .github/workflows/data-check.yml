@@ -1,0 +1,45 @@
+name: Data check
+
+# Guards the database's integrity: every push/PR that touches the data,
+# the converter, or the generated JSON must pass schema validation AND prove
+# that docs/data.json was regenerated from the spreadsheet (no drift).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "database/**"
+      - "scripts/**"
+      - "docs/data.json"
+      - ".github/workflows/data-check.yml"
+  pull_request:
+    paths:
+      - "database/**"
+      - "scripts/**"
+      - "docs/data.json"
+      - ".github/workflows/data-check.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Validate database against schema
+        run: python scripts/validate.py
+
+      - name: Regenerate data.json and check it is in sync
+        run: |
+          python scripts/xlsx_to_json.py
+          if ! git diff --exit-code docs/data.json; then
+            echo "::error::docs/data.json is out of sync with the spreadsheet." \
+                 "Run 'python scripts/xlsx_to_json.py' and commit the result."
+            exit 1
+          fi

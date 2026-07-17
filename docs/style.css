@@ -8,6 +8,8 @@
   --accent-text: #ffffff;
   --card-bg: #ffffff;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --warn: #b45309;
+  --warn-bg: #fef3c7;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,6 +23,8 @@
     --accent-text: #0d1117;
     --card-bg: #1c2024;
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --warn: #fbbf24;
+    --warn-bg: #3a2e12;
   }
 }
 
@@ -82,6 +86,26 @@ input, select {
   font-size: 0.95rem;
 }
 
+.clear-btn {
+  flex: 0 0 auto;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-alt);
+  color: var(--text);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.clear-btn:hover {
+  border-color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .result-count {
   color: var(--text-muted);
   font-size: 0.9rem;
@@ -126,12 +150,38 @@ input, select {
   color: var(--text-muted);
   white-space: nowrap;
   border: 1px solid var(--border);
+  border-left-width: 3px;
 }
+
+/* Subtle per-category accent so categories are scannable at a glance. */
+.badge[data-category="International competitions"]        { border-left-color: #d97706; }
+.badge[data-category="Research programs / opportunities"] { border-left-color: #2563eb; }
+.badge[data-category="Summer schools"]                    { border-left-color: #ea580c; }
+.badge[data-category="Scholarships"]                      { border-left-color: #16a34a; }
+.badge[data-category="Academic courses"]                  { border-left-color: #7c3aed; }
+.badge[data-category="Innovation challenges"]             { border-left-color: #db2777; }
+.badge[data-category="Academic journals & publications"]  { border-left-color: #0891b2; }
+.badge[data-category="Conferences & academic events"]     { border-left-color: #ca8a04; }
 
 .card .organizer {
   color: var(--text-muted);
   font-size: 0.85rem;
   margin: 0;
+}
+
+.card .eligibility {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.meta-key {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.card .eligibility .meta-key {
+  color: var(--text-muted);
 }
 
 .card .description {
@@ -153,9 +203,32 @@ input, select {
   padding: 0.15rem 0.45rem;
 }
 
-.card a.official-link {
+.notes {
+  font-size: 0.82rem;
+}
+
+.notes summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+  width: fit-content;
+}
+
+.notes p {
+  margin: 0.4rem 0 0;
+  color: var(--text-muted);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
   margin-top: 0.4rem;
-  align-self: flex-start;
+}
+
+.card a.official-link {
   font-size: 0.85rem;
   color: var(--accent);
   text-decoration: none;
@@ -164,6 +237,19 @@ input, select {
 
 .card a.official-link:hover {
   text-decoration: underline;
+}
+
+.freshness {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.freshness.stale {
+  color: var(--warn);
+  background: var(--warn-bg);
+  border-radius: 6px;
+  padding: 0.1rem 0.4rem;
 }
 
 .empty-state {

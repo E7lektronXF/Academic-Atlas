@@ -18,8 +18,10 @@ Thank you for considering a contribution. Academic Atlas prioritizes accuracy an
 4. Fill in every required column. Use `UNKNOWN` instead of guessing.
 5. Set `Last_Verified` to the date you confirmed the information.
 6. Do not reorder, rename, or remove existing columns.
-7. Regenerate the website data by running `pip install -r scripts/requirements.txt` then `python scripts/xlsx_to_json.py`. This updates `docs/data.json`, which powers the site in `docs/`.
-8. Open a pull request with a short description and a link to the official source you used.
+7. Install the tooling once with `pip install -r scripts/requirements.txt`.
+8. Validate your changes against the schema by running `python scripts/validate.py`. Fix any reported errors before continuing.
+9. Regenerate the website data by running `python scripts/xlsx_to_json.py`. This updates `docs/data.json`, which powers the site in `docs/`.
+10. Open a pull request with a short description and a link to the official source you used. The **Data check** workflow re-runs validation and confirms `docs/data.json` is in sync; both must pass.
 
 ### 2. Correcting or Updating a Record
 
@@ -43,6 +45,7 @@ If you notice incorrect, outdated, or unverifiable data but aren't able to fix i
 * [ ] Dates use `YYYY-MM-DD`, or `Rolling`/`UNKNOWN` where explicitly allowed.
 * [ ] `Last_Verified` is set.
 * [ ] No existing verified rows were removed or altered without justification.
+* [ ] `python scripts/validate.py` passes with no errors.
 * [ ] `docs/data.json` was regenerated via `python scripts/xlsx_to_json.py` after editing the spreadsheet.
 
 ## Proposing Structural Changes

@@ -75,7 +75,10 @@ docs/                     (also serves as the GitHub Pages website)
 
 scripts/
     xlsx_to_json.py       (regenerates docs/data.json)
+    validate.py           (checks the database against DatabaseSchema.md)
 ```
+
+Data integrity is enforced automatically: `scripts/validate.py` checks every record against the schema, and a GitHub Actions workflow (`.github/workflows/data-check.yml`) re-runs it on each pull request and confirms `docs/data.json` is regenerated from the spreadsheet.
 
 The structure may evolve as the project grows, but simplicity and maintainability will always be prioritized.
 
@@ -111,7 +114,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/DatabaseSchema.md`](docs/Dat
 
 ## Project Status
 
-Current Version: **v0.4.0**
+Current Version: **v0.5.0**
 
 Current Phase: **Foundation**
 
