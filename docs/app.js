@@ -28,13 +28,14 @@ const state = {
   category: "",
   format: "",
   status: "",
+  scope: "",
   sort: "deadline",
   id: "",
   shown: PAGE_SIZE,
 };
 
 const el = {};
-["home-view","browse-view","closing-soon","closing-soon-cards","category-grid",
+["home-view","browse-view","scope-bar","closing-soon","closing-soon-cards","category-grid",
  "browse-title","result-count","cards","empty-state","error-state","load-more",
  "search","format-filter","status-filter","sort","clear-filters",
  "detail-backdrop","detail-panel","detail-body","detail-close"].forEach((id) => {
@@ -127,12 +128,25 @@ function freshness(record) {
 
 // --- filtering & sorting ----------------------------------------------------
 
+// Eligibility scope: "intl" = open to Türkiye/international, "us" = US only.
+function scopeMatches(r) {
+  if (state.scope === "intl") return r.Eligibility_Scope === "International";
+  if (state.scope === "us") return r.Eligibility_Scope === "US only";
+  return true;
+}
+
+function scopePill(r) {
+  if (r.Eligibility_Scope === "US only") return pill("us", "🇺🇸 US citizens/residents only");
+  if (r.Eligibility_Scope === "International") return pill("intl", "🌍 Open to Türkiye");
+  return "";
+}
+
 function matchesFilters(r) {
   const q = state.q.trim().toLowerCase();
   const matchesSearch = !q ||
     [r.Name, r.Organizer, r.Description, r.Category, r.Country_Region, r.Eligibility]
       .filter(Boolean).some((f) => String(f).toLowerCase().includes(q));
-  return matchesSearch &&
+  return matchesSearch && scopeMatches(r) &&
     (!state.category || r.Category === state.category) &&
     (!state.format || r.Format === state.format) &&
     (!state.status || r.Status === state.status);
@@ -169,6 +183,7 @@ function cardHtml(r) {
       <p class="organizer">${escapeHtml(r.Organizer)} · ${escapeHtml(r.Country_Region)}</p>
       <p class="description">${escapeHtml(r.Description)}</p>
       <div class="pill-row">
+        ${scopePill(r)}
         ${deadlinePill(r)}
         ${formatPill(r)}
         ${costPill(r)}
@@ -200,11 +215,15 @@ function detailHtml(r) {
       <p class="detail-org">${escapeHtml(r.Organizer)} · ${escapeHtml(r.Country_Region)}</p>
     </div>
     <div class="detail-pills">
-      ${deadlinePill(r)} ${statusPill(r)} ${formatPill(r)} ${costPill(r)}
+      ${scopePill(r)} ${deadlinePill(r)} ${statusPill(r)} ${formatPill(r)} ${costPill(r)}
     </div>
     <p class="detail-desc">${escapeHtml(r.Description)}</p>
     <div class="detail-grid">
       ${detailRow("Eligibility", r.Eligibility, "d-eligibility")}
+      ${detailRow("Who can apply",
+          r.Eligibility_Scope === "US only" ? "U.S. citizens / permanent residents only"
+        : r.Eligibility_Scope === "International" ? "Open to international students, including Türkiye"
+        : "", "d-scope")}
       ${detailRow("Application deadline", has(r.Application_Deadline) ? r.Application_Deadline : "", "d-deadline")}
       ${detailRow("Event dates", r.Event_Dates, "d-dates")}
       ${detailRow("Cost", r.Cost, "d-cost")}
@@ -222,6 +241,7 @@ function detailHtml(r) {
 
 function render() {
   el["error-state"].hidden = true;
+  el["scope-bar"].hidden = false;
   const browsing = Boolean(state.q || state.category || state.format || state.status);
   if (browsing) renderBrowse(); else renderHome();
   renderDetail();
@@ -231,9 +251,10 @@ function renderHome() {
   el["browse-view"].hidden = true;
   el["home-view"].hidden = false;
 
-  // Category tiles with live counts.
+  // Category tiles with live counts (respecting the active eligibility scope).
+  const inScope = state.records.filter(scopeMatches);
   const counts = {};
-  state.records.forEach((r) => { counts[r.Category] = (counts[r.Category] || 0) + 1; });
+  inScope.forEach((r) => { counts[r.Category] = (counts[r.Category] || 0) + 1; });
   el["category-grid"].innerHTML = CATEGORY_ORDER.map((cat) => {
     const meta = CATEGORY_META[cat];
     const n = counts[cat] || 0;
@@ -245,8 +266,8 @@ function renderHome() {
       </a>`;
   }).join("");
 
-  // "Closing soon": nearest upcoming concrete deadlines (max 3).
-  const soon = state.records
+  // "Closing soon": nearest upcoming concrete deadlines (max 3), within scope.
+  const soon = inScope
     .map((r) => ({ r, info: deadlineInfo(r) }))
     .filter((x) => x.info.kind === "future")
     .sort((a, b) => a.info.sortKey - b.info.sortKey)
@@ -308,6 +329,7 @@ function readUrl() {
   state.category = p.get("category") || "";
   state.format = p.get("format") || "";
   state.status = p.get("status") || "";
+  state.scope = ["intl", "us"].includes(p.get("scope")) ? p.get("scope") : "";
   state.sort = SORTERS[p.get("sort")] ? p.get("sort") : "deadline";
   state.id = p.get("id") || "";
   state.shown = PAGE_SIZE;
@@ -319,6 +341,7 @@ function writeUrl(push = false) {
   if (state.category) p.set("category", state.category);
   if (state.format) p.set("format", state.format);
   if (state.status) p.set("status", state.status);
+  if (state.scope) p.set("scope", state.scope);
   if (state.sort && state.sort !== "deadline") p.set("sort", state.sort);
   if (state.id) p.set("id", state.id);
   const qs = p.toString();
@@ -332,6 +355,9 @@ function syncControls() {
   el["format-filter"].value = state.format;
   el["status-filter"].value = state.status;
   el["sort"].value = state.sort;
+  document.querySelectorAll(".seg").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.scope === state.scope);
+  });
 }
 
 function debounce(fn, delay) {
@@ -374,6 +400,14 @@ function wireEvents() {
   });
   el["load-more"].addEventListener("click", () => {
     state.shown += PAGE_SIZE; renderBrowse();
+  });
+
+  document.querySelectorAll(".seg").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.scope = btn.dataset.scope;
+      state.shown = PAGE_SIZE;
+      syncControls(); writeUrl(); render();
+    });
   });
 
   // Card click / keyboard (event delegation across both card containers).

@@ -50,6 +50,7 @@ Column order must be preserved unless a documented structural change is made.
 | 13| `Status`              | enum            | Yes      | `Active`, `Upcoming`, `Archived`. `Archived` is used instead of deleting a record. |
 | 14| `Last_Verified`       | date (ISO)      | Yes      | `YYYY-MM-DD` the contributor last confirmed this record against the official source. |
 | 15| `Notes`               | string          | No       | Any additional context that doesn't fit another column. |
+| 16| `Eligibility_Scope`   | enum            | Yes      | Who is eligible by citizenship/residency: `International` (open to students worldwide, including Türkiye) or `US only` (limited to U.S. citizens/permanent residents, including U.S. state-restricted programs). Nationality nuances stay in `Eligibility`. |
 
 ---
 

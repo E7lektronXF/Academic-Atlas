@@ -42,6 +42,16 @@
 </header>
 
 <main id="main" class="wrap">
+  <!-- Eligibility scope filter — visible in both home and browse views -->
+  <div class="scope-bar" id="scope-bar" hidden>
+    <span class="scope-label">Who can apply:</span>
+    <div class="segmented" role="group" aria-label="Filter by eligibility">
+      <button type="button" class="seg" data-scope="">All</button>
+      <button type="button" class="seg" data-scope="intl">🌍 Open to Türkiye</button>
+      <button type="button" class="seg" data-scope="us">🇺🇸 US only</button>
+    </div>
+  </div>
+
   <!-- Home view: category tiles + a small "closing soon" strip -->
   <section id="home-view" hidden>
     <div class="intro">

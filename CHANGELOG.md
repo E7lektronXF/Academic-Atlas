@@ -6,6 +6,24 @@ This project follows Semantic Versioning (`MAJOR.MINOR.PATCH`).
 
 ---
 
+## [0.6.5] - 2026-07-17
+
+### Added
+
+* New schema column `Eligibility_Scope` (enum: `International` | `US only`) so every record states, in a machine-readable way, whether students worldwide (including Türkiye) can apply or whether it is limited to U.S. citizens/permanent residents. Documented in `docs/DatabaseSchema.md` and enforced by `scripts/validate.py`.
+* 9 new verified opportunities (36 → 45), all open to international students: International Olympiad on Astronomy and Astrophysics (IOAA), International Linguistics Olympiad (IOL), International Geography Olympiad (iGeo, hosted in Istanbul in 2026), European Girls' Mathematical Olympiad (EGMO), London International Youth Science Forum (LIYSF), FIRST Global Challenge, The Hague International MUN (THIMUN), Yale Model UN (YMUN), and Rise (Schmidt Futures & Rhodes Trust).
+* Website: an eligibility filter (`All · 🌍 Open to Türkiye · 🇺🇸 US only`) shown in both the home and browse views, and a colour-coded eligibility badge on every card and in the detail view. Category tile counts and the "Closing soon" strip respect the active filter, and the choice is shareable via a `?scope=` URL parameter.
+
+### Changed
+
+* Backfilled `Eligibility_Scope` for all 36 existing records after verifying each against its official source. 8 are `US only` (Regeneron STS, MIT PRIMES, Simons, MITES, COSMOS, QuestBridge, Coca-Cola Scholars, The Gates Scholarship); the other 37 are open to international students. Eligibility text for RSI and QuestBridge was clarified to reflect verified international/US-residency rules.
+
+### Notes
+
+`database/AcademicAtlas.xlsx` remains the single source of truth; `docs/data.json` was regenerated and passes `scripts/validate.py` (45 records).
+
+---
+
 ## [0.6.0] - 2026-07-17
 
 ### Added

@@ -94,6 +94,42 @@ body.no-scroll { overflow: hidden; }
   border-color: var(--card-bg);
 }
 
+/* ---------- Eligibility scope bar ---------- */
+.scope-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin: 1.4rem 0 0.2rem;
+}
+.scope-label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+.segmented {
+  display: inline-flex;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+.seg {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.seg:hover { color: var(--text); }
+.seg.active {
+  background: var(--card-bg);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
 /* ---------- Intro / sections ---------- */
 main { padding-bottom: 3rem; }
 .intro { padding: 2.2rem 0 1rem; }
@@ -252,6 +288,8 @@ select, .clear-btn {
 .pill-upcoming{ --pc: #2563eb; }
 .pill-archived{ --pc: #6b7280; }
 .pill-neutral { --pc: var(--text-muted); }
+.pill-intl    { --pc: #16a34a; }
+.pill-us      { --pc: #b45309; }
 
 /* ---------- Load more / empty ---------- */
 .load-more-wrap { display: flex; justify-content: center; margin: 1.5rem 0; }

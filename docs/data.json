@@ -14,7 +14,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Team selection is handled by each country's national olympiad committee, not centrally; host country/dates change yearly."
+    "Notes": "Team selection is handled by each country's national olympiad committee, not centrally; host country/dates change yearly.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COMP-0002",
@@ -31,7 +32,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Selection handled nationally; host country/dates change yearly."
+    "Notes": "Selection handled nationally; host country/dates change yearly.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COMP-0003",
@@ -48,7 +50,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Selection handled nationally; host country/dates change yearly."
+    "Notes": "Selection handled nationally; host country/dates change yearly.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COMP-0004",
@@ -65,7 +68,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Selection handled nationally; host country/dates change yearly."
+    "Notes": "Selection handled nationally; host country/dates change yearly.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COMP-0005",
@@ -82,7 +86,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Selection handled nationally; host country/dates change yearly."
+    "Notes": "Selection handled nationally; host country/dates change yearly.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COMP-0006",
@@ -99,7 +104,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Entry is via affiliated local fairs, not direct application; affiliate fair deadlines vary by region."
+    "Notes": "Entry is via affiliated local fairs, not direct application; affiliate fair deadlines vary by region.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COMP-0007",
@@ -116,7 +122,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "The 2026 cycle is closed (registration by March 31, submission by May 31, 2026). Runs annually; the 2027 cycle typically opens registration in early February with a late-May submission deadline. Free to enter by the regular deadline."
+    "Notes": "The 2026 cycle is closed (registration by March 31, submission by May 31, 2026). Runs annually; the 2027 cycle typically opens registration in early February with a late-May submission deadline. Free to enter by the regular deadline.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COMP-0008",
@@ -133,7 +140,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Regional round dates/fees vary by location; check local round listing."
+    "Notes": "Regional round dates/fees vary by location; check local round listing.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "RES-0001",
@@ -141,7 +149,7 @@
     "Name": "Research Science Institute (RSI)",
     "Organizer": "Center for Excellence in Education (CEE), hosted at MIT",
     "Country_Region": "United States (international students apply via home-country selection)",
-    "Eligibility": "US students with one year left before high school graduation (seniors not eligible); international applicants apply through their own country's selection process",
+    "Eligibility": "Rising high school seniors aged 16+ by July 1. Open to U.S. citizens/permanent residents and to international students from participating countries (about 30 international places, via national selection).",
     "Description": "Free 6-week on-campus summer research program combining STEM coursework with mentored research; approximately 100 students selected annually.",
     "Official_URL": "https://www.cee.org/programs/research-science-institute",
     "Application_Deadline": "UNKNOWN",
@@ -150,7 +158,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Applications typically open in the fall with a mid-December deadline (RSI 2026 was December 10, 2025). RSI 2027 dates are announced by CEE in fall 2026. Highly selective; free to attend."
+    "Notes": "Applications typically open in the fall with a mid-December deadline (RSI 2026 was December 10, 2025). RSI 2027 dates are announced by CEE in fall 2026. Highly selective; free to attend.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "RES-0002",
@@ -167,7 +176,8 @@
     "Format": "Hybrid",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "The application link appears on the MIT PRIMES site in September; the deadline is typically around December 1 (PRIMES 2026 was December 1, 2025). Greater-Boston students for PRIMES; PRIMES-USA is open to U.S. students nationwide."
+    "Notes": "The application link appears on the MIT PRIMES site in September; the deadline is typically around December 1 (PRIMES 2026 was December 1, 2025). Greater-Boston students for PRIMES; PRIMES-USA is open to U.S. students nationwide.",
+    "Eligibility_Scope": "US only"
   },
   {
     "ID": "RES-0003",
@@ -183,8 +193,9 @@
     "Cost": "Free",
     "Format": "In-person",
     "Status": "Active",
-    "Last_Verified": "2026-07-16",
-    "Notes": "Requires school nomination (max 2 per school); highly selective (~5% acceptance rate)."
+    "Last_Verified": "2026-07-17",
+    "Notes": "Requires school nomination (max 2 per school); highly selective (~5% acceptance rate).",
+    "Eligibility_Scope": "US only"
   },
   {
     "ID": "SUM-0001",
@@ -200,8 +211,9 @@
     "Cost": "UNKNOWN (see Fees & Financial Aid page)",
     "Format": "In-person",
     "Status": "Active",
-    "Last_Verified": "2026-07-16",
-    "Notes": "Cost varies by track/campus; need-based financial aid available."
+    "Last_Verified": "2026-07-17",
+    "Notes": "Cost varies by track/campus; need-based financial aid available.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "SUM-0002",
@@ -218,7 +230,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Tuition varies by session; see site for current pricing and aid options."
+    "Notes": "Tuition varies by session; see site for current pricing and aid options.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "SUM-0003",
@@ -234,8 +247,9 @@
     "Cost": "Free (students only cover transportation)",
     "Format": "Hybrid",
     "Status": "Active",
-    "Last_Verified": "2026-07-16",
-    "Notes": "Multiple program tracks (Summer/Semester/Saturdays) with different eligibility and formats."
+    "Last_Verified": "2026-07-17",
+    "Notes": "Multiple program tracks (Summer/Semester/Saturdays) with different eligibility and formats.",
+    "Eligibility_Scope": "US only"
   },
   {
     "ID": "SCHOL-0001",
@@ -252,7 +266,8 @@
     "Format": "UNKNOWN",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Only open to UWC graduates, not the general public."
+    "Notes": "Only open to UWC graduates, not the general public.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "SCHOL-0002",
@@ -260,7 +275,7 @@
     "Name": "QuestBridge National College Match",
     "Organizer": "QuestBridge",
     "Country_Region": "United States",
-    "Eligibility": "High-achieving high school seniors from low-income backgrounds",
+    "Eligibility": "High school seniors currently attending high school in the U.S. (U.S. citizens/permanent residents living abroad are also eligible). Students living outside the U.S. are not eligible for the Match.",
     "Description": "Matches selected students with full four-year scholarships at QuestBridge partner colleges.",
     "Official_URL": "https://www.questbridge.org/",
     "Application_Deadline": "2026-10-01",
@@ -269,7 +284,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "The 2026 National College Match application is due October 1, 2026 (11:59pm PT); match rankings due October 15. QuestBridge also runs the College Prep Scholarship for juniors with a late-March deadline."
+    "Notes": "The 2026 National College Match application is due October 1, 2026 (11:59pm PT); match rankings due October 15. QuestBridge also runs the College Prep Scholarship for juniors with a late-March deadline.",
+    "Eligibility_Scope": "US only"
   },
   {
     "ID": "COURSE-0001",
@@ -285,8 +301,9 @@
     "Cost": "Paid, varies by course (e.g., ~$7,801 for a residential course); need-based financial aid available; $15 application fee",
     "Format": "Hybrid",
     "Status": "Active",
-    "Last_Verified": "2026-07-16",
-    "Notes": "Tuition varies significantly by course/length; see course catalog for exact pricing."
+    "Last_Verified": "2026-07-17",
+    "Notes": "Tuition varies significantly by course/length; see course catalog for exact pricing.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COURSE-0002",
@@ -303,7 +320,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Full diploma-granting school, not a single course; admissions is selective."
+    "Notes": "Full diploma-granting school, not a single course; admissions is selective.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "INNOV-0001",
@@ -320,7 +338,8 @@
     "Format": "Hybrid",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Runs on an annual season; the 2025-26 season opened August 28, 2025 (activation/registration through October 30) with the Innovation Summit in April 2026. The 2026-27 season is expected to open in late August 2026."
+    "Notes": "Runs on an annual season; the 2025-26 season opened August 28, 2025 (activation/registration through October 30) with the Innovation Summit in April 2026. The 2026-27 season is expected to open in late August 2026.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "INNOV-0002",
@@ -337,7 +356,8 @@
     "Format": "Hybrid",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Program registration is managed via technovationchallenge.org; confirm current eligibility there."
+    "Notes": "Program registration is managed via technovationchallenge.org; confirm current eligibility there.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "JOUR-0001",
@@ -354,7 +374,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Fixed quarterly submission deadlines each year: February 1, May 1, August 1, and November 1. The next deadline is August 1, 2026 (Winter issue). Published quarterly."
+    "Notes": "Fixed quarterly submission deadlines each year: February 1, May 1, August 1, and November 1. The next deadline is August 1, 2026 (Winter issue). Published quarterly.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "JOUR-0002",
@@ -371,7 +392,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Double-blind peer review; APC charged in two phases."
+    "Notes": "Double-blind peer review; APC charged in two phases.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "CONF-0001",
@@ -388,7 +410,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-16",
-    "Notes": "Held annually in late January; check official site for current session dates/fees."
+    "Notes": "Held annually in late January; check official site for current session dates/fees.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COMP-0009",
@@ -405,7 +428,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "The 2027 application is open June 1 - November 5, 2026 (8pm ET). Top 40 finalists compete in Washington, D.C., in March."
+    "Notes": "The 2027 application is open June 1 - November 5, 2026 (8pm ET). Top 40 finalists compete in Washington, D.C., in March.",
+    "Eligibility_Scope": "US only"
   },
   {
     "ID": "COMP-0010",
@@ -422,7 +446,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "2026 entries are due September 15, 2026 (11:59pm PDT); entrants must peer-review at least five other submissions by September 30."
+    "Notes": "2026 entries are due September 15, 2026 (11:59pm PDT); entrants must peer-review at least five other submissions by September 30.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "INNOV-0003",
@@ -439,7 +464,8 @@
     "Format": "Hybrid",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Runs annually; the 2026 cycle ran September 17, 2025 - January 15, 2026 with the summit in late April 2026. The next cycle typically opens in September with a mid-January deadline."
+    "Notes": "Runs annually; the 2026 cycle ran September 17, 2025 - January 15, 2026 with the summit in late April 2026. The next cycle typically opens in September with a mid-January deadline.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "INNOV-0004",
@@ -456,7 +482,8 @@
     "Format": "Hybrid",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Runs annually; the 2026 project deadline was March 1, 2026 (extended to March 7) with finals in June 2026 at RIT. Check the official site for 2027 dates."
+    "Notes": "Runs annually; the 2026 project deadline was March 1, 2026 (extended to March 7) with finals in June 2026 at RIT. Check the official site for 2027 dates.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "SCHOL-0003",
@@ -473,7 +500,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "The 2027 application is open August 3 - September 30, 2026 (5pm ET). 150 scholars are selected annually."
+    "Notes": "The 2027 application is open August 3 - September 30, 2026 (5pm ET). 150 scholars are selected annually.",
+    "Eligibility_Scope": "US only"
   },
   {
     "ID": "SCHOL-0004",
@@ -490,7 +518,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "The 2027 application is available July 15 - September 15, 2026. A last-dollar award covering full cost of attendance beyond other aid."
+    "Notes": "The 2027 application is available July 15 - September 15, 2026. A last-dollar award covering full cost of attendance beyond other aid.",
+    "Eligibility_Scope": "US only"
   },
   {
     "ID": "SUM-0004",
@@ -507,7 +536,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Held each summer at Boston University; the 2026 program ran June 28 - August 8 with a February 27, 2026 application deadline. The 2027 application typically opens in winter with a late-February/early-March deadline."
+    "Notes": "Held each summer at Boston University; the 2026 program ran June 28 - August 8 with a February 27, 2026 application deadline. The 2027 application typically opens in winter with a late-February/early-March deadline.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "SUM-0005",
@@ -524,7 +554,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Held each summer; the 2026 application deadline was around March 8, 2026 (now closed). The 2027 application typically opens in winter with an early-March deadline."
+    "Notes": "Held each summer; the 2026 application deadline was around March 8, 2026 (now closed). The 2027 application typically opens in winter with an early-March deadline.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "SUM-0006",
@@ -541,7 +572,8 @@
     "Format": "In-person",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Hosted at UC campuses including Davis, Irvine, San Diego, and Santa Cruz. The summer 2026 application closed February 6, 2026; the 2027 application typically opens in January with an early-February deadline."
+    "Notes": "Hosted at UC campuses including Davis, Irvine, San Diego, and Santa Cruz. The summer 2026 application closed February 6, 2026; the 2027 application typically opens in January with an early-February deadline.",
+    "Eligibility_Scope": "US only"
   },
   {
     "ID": "JOUR-0003",
@@ -558,7 +590,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Rolling submissions; a single $49 fee covers the full review-and-publication process. As of March 2026, JEI focuses on hypothesis-driven life and experimental physical sciences (no purely computational or dataset-only projects)."
+    "Notes": "Rolling submissions; a single $49 fee covers the full review-and-publication process. As of March 2026, JEI focuses on hypothesis-driven life and experimental physical sciences (no purely computational or dataset-only projects).",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "JOUR-0004",
@@ -575,7 +608,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Rolling submissions with no submission or publication fees."
+    "Notes": "Rolling submissions with no submission or publication fees.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "RES-0004",
@@ -592,7 +626,8 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Term-based rolling admission; attending an info session unlocks a priority deadline. On average, fewer than a third of applicants are admitted."
+    "Notes": "Term-based rolling admission; attending an info session unlocks a priority deadline. On average, fewer than a third of applicants are admitted.",
+    "Eligibility_Scope": "International"
   },
   {
     "ID": "COURSE-0003",
@@ -609,6 +644,169 @@
     "Format": "Online",
     "Status": "Active",
     "Last_Verified": "2026-07-17",
-    "Notes": "Self-paced with open enrollment via edX; the audit track (lectures and assignments) is free, with an optional paid verified certificate."
+    "Notes": "Self-paced with open enrollment via edX; the audit track (lectures and assignments) is free, with an optional paid verified certificate.",
+    "Eligibility_Scope": "International"
+  },
+  {
+    "ID": "COMP-0011",
+    "Category": "International competitions",
+    "Name": "International Olympiad on Astronomy and Astrophysics (IOAA)",
+    "Organizer": "International Olympiad on Astronomy and Astrophysics",
+    "Country_Region": "International",
+    "Eligibility": "Secondary-school students selected through their national astronomy/astrophysics olympiad; about 50 countries participate.",
+    "Description": "Annual international competition in astronomy and astrophysics for secondary-school students, with theoretical, data-analysis, and observational rounds.",
+    "Official_URL": "https://ioaastrophysics.org/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-09-25 - 2026-10-05 (Hanoi, Vietnam)",
+    "Cost": "Free (national selection varies by country)",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-17",
+    "Notes": "Participation is through each country's national olympiad selection; the 19th IOAA is in Hanoi, Vietnam. Turkiye competes via its national astronomy olympiad.",
+    "Eligibility_Scope": "International"
+  },
+  {
+    "ID": "COMP-0012",
+    "Category": "International competitions",
+    "Name": "International Linguistics Olympiad (IOL)",
+    "Organizer": "International Linguistics Olympiad",
+    "Country_Region": "International",
+    "Eligibility": "Secondary-school students selected through their national linguistics olympiad; 40+ countries and territories.",
+    "Description": "One of the international science olympiads: students solve self-contained linguistic puzzles from a wide range of languages using logic and reasoning, in individual and team contests.",
+    "Official_URL": "https://ioling.org/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-07-26 - 2026-08-02 (Bucharest, Romania)",
+    "Cost": "Free (national selection varies by country)",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-17",
+    "Notes": "Entry is via national linguistics olympiad selection; the 23rd IOL is in Bucharest, Romania.",
+    "Eligibility_Scope": "International"
+  },
+  {
+    "ID": "COMP-0013",
+    "Category": "International competitions",
+    "Name": "International Geography Olympiad (iGeo)",
+    "Organizer": "International Geographical Union (IGU) Olympiad Task Force",
+    "Country_Region": "International",
+    "Eligibility": "Students aged 16-19 selected through their national geography olympiad; about 50 countries.",
+    "Description": "Annual competition for 16-19-year-old geography students, comprising a written test, a multimedia test, and substantial fieldwork.",
+    "Official_URL": "https://geoolympiad.org/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026 (Istanbul, Turkiye)",
+    "Cost": "Free (national selection varies by country)",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-17",
+    "Notes": "Entry is via national geography olympiad selection. iGeo 2026 is hosted in Istanbul, Turkiye.",
+    "Eligibility_Scope": "International"
+  },
+  {
+    "ID": "COMP-0014",
+    "Category": "International competitions",
+    "Name": "European Girls' Mathematical Olympiad (EGMO)",
+    "Organizer": "European Girls' Mathematical Olympiad",
+    "Country_Region": "International",
+    "Eligibility": "Female secondary-school students selected through their national mathematical olympiad; 60+ countries, including many beyond Europe.",
+    "Description": "Premier international mathematical olympiad for female secondary-school students, with two exam papers held over two days.",
+    "Official_URL": "https://www.egmo.org/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "UNKNOWN",
+    "Cost": "Free (national selection varies by country)",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-17",
+    "Notes": "Entry is via each country's national mathematical olympiad selection for female students; 67 countries participated in 2026. Turkiye participates.",
+    "Eligibility_Scope": "International"
+  },
+  {
+    "ID": "SUM-0007",
+    "Category": "Summer schools",
+    "Name": "London International Youth Science Forum (LIYSF)",
+    "Organizer": "London International Youth Science Forum",
+    "Country_Region": "United Kingdom",
+    "Eligibility": "Students aged 16-21 with a strong interest in science; open worldwide (80+ countries).",
+    "Description": "Two-week residential STEM summer forum in London with lectures by leading scientists, lab visits, and demonstrations, bringing together about 500 students from 80+ countries.",
+    "Official_URL": "https://www.liysf.org.uk/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-07-19 - 2026-08-01 (London)",
+    "Cost": "Paid (GBP 3,295 on-campus; GBP 395 virtual)",
+    "Format": "Hybrid",
+    "Status": "Active",
+    "Last_Verified": "2026-07-17",
+    "Notes": "Apply by about 31 May each year (the 2026 deadline was 31 May; program 19 Jul - 1 Aug 2026). On-campus and virtual options available.",
+    "Eligibility_Scope": "International"
+  },
+  {
+    "ID": "INNOV-0005",
+    "Category": "Innovation challenges",
+    "Name": "FIRST Global Challenge",
+    "Organizer": "FIRST Global (International FIRST Committee Association)",
+    "Country_Region": "International",
+    "Eligibility": "High school students (ages ~14-18); one national team per country, selected by the national organization; 190+ countries.",
+    "Description": "Olympics-style international robotics competition in which one team per nation builds and programs a robot to tackle a global challenge theme.",
+    "Official_URL": "https://first.global/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-10-07 - 2026-10-10 (Incheon, Republic of Korea)",
+    "Cost": "UNKNOWN",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-17",
+    "Notes": "Participation is via each country's national FIRST Global team. The 2026 event is in Incheon, Korea (theme: Igniting Innovation).",
+    "Eligibility_Scope": "International"
+  },
+  {
+    "ID": "CONF-0002",
+    "Category": "Conferences & academic events",
+    "Name": "The Hague International Model United Nations (THIMUN)",
+    "Organizer": "THIMUN Foundation",
+    "Country_Region": "Netherlands",
+    "Eligibility": "Secondary-school students in registered school delegations; students from 100+ countries.",
+    "Description": "One of the world's largest and most international Model UN conferences: a four-day simulation of the UN for secondary-school students, held annually in The Hague.",
+    "Official_URL": "https://thehague.thimun.org/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "UNKNOWN (late January each year, The Hague)",
+    "Cost": "Paid",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-17",
+    "Notes": "Schools register delegations; about 3,200 participants from ~200 schools across 100+ countries. Held at the end of January in The Hague.",
+    "Eligibility_Scope": "International"
+  },
+  {
+    "ID": "CONF-0003",
+    "Category": "Conferences & academic events",
+    "Name": "Yale Model United Nations (YMUN)",
+    "Organizer": "Yale International Relations Association (YIRA)",
+    "Country_Region": "United States",
+    "Eligibility": "High school students worldwide, individually or in school delegations; about 40 countries represented.",
+    "Description": "Four-day international-relations simulation for high school students held on Yale's campus in New Haven, one of the largest high school Model UN conferences.",
+    "Official_URL": "https://ymun.org/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "UNKNOWN (January each year, New Haven)",
+    "Cost": "Paid",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-17",
+    "Notes": "Held each January at Yale; 1,800+ delegates from 40+ countries. YIRA also runs YMUN conferences abroad (Korea, Dubai, Taiwan, Europe, Singapore).",
+    "Eligibility_Scope": "International"
+  },
+  {
+    "ID": "SCHOL-0005",
+    "Category": "Scholarships",
+    "Name": "Rise (Rise for the World)",
+    "Organizer": "Schmidt Futures & the Rhodes Trust",
+    "Country_Region": "International",
+    "Eligibility": "Young people aged 15-17 working in service of others; open to applicants worldwide.",
+    "Description": "Global program that selects promising 15-17-year-olds and supports them for life with need-based scholarships, mentorship, funding, and career development.",
+    "Official_URL": "https://www.risefortheworld.org/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "UNKNOWN",
+    "Cost": "Free (need-based scholarships and funding provided)",
+    "Format": "Online",
+    "Status": "Active",
+    "Last_Verified": "2026-07-17",
+    "Notes": "Applications run on an annual cycle (historically opening in the fall/winter). 100 Global Winners are selected each year and receive lifelong benefits. Open worldwide.",
+    "Eligibility_Scope": "International"
   }
 ]

@@ -40,6 +40,7 @@ EXPECTED_HEADERS = [
     "Status",
     "Last_Verified",
     "Notes",
+    "Eligibility_Scope",
 ]
 
 # Optional columns may legitimately hold nothing; everything else is required.
@@ -59,6 +60,7 @@ PREFIX_TO_CATEGORY = {
 VALID_CATEGORIES = set(PREFIX_TO_CATEGORY.values())
 VALID_FORMATS = {"Online", "In-person", "Hybrid", "UNKNOWN"}
 VALID_STATUSES = {"Active", "Upcoming", "Archived"}
+VALID_SCOPES = {"International", "US only"}
 
 ID_RE = re.compile(r"^(" + "|".join(PREFIX_TO_CATEGORY) + r")-(\d{4})$")
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -161,6 +163,11 @@ def validate():
         if row["Status"] and row["Status"] not in VALID_STATUSES:
             errors.append(
                 f"{label}: Status '{row['Status']}' must be one of {sorted(VALID_STATUSES)}."
+            )
+        if row["Eligibility_Scope"] and row["Eligibility_Scope"] not in VALID_SCOPES:
+            errors.append(
+                f"{label}: Eligibility_Scope '{row['Eligibility_Scope']}' must be one of "
+                f"{sorted(VALID_SCOPES)}."
             )
 
         # Application_Deadline: ISO date, or the allowed special values.
