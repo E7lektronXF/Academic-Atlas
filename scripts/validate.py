@@ -41,10 +41,11 @@ EXPECTED_HEADERS = [
     "Last_Verified",
     "Notes",
     "Eligibility_Scope",
+    "Qualifies_For",
 ]
 
 # Optional columns may legitimately hold nothing; everything else is required.
-OPTIONAL_COLUMNS = {"Event_Dates", "Notes"}
+OPTIONAL_COLUMNS = {"Event_Dates", "Notes", "Qualifies_For"}
 
 # Prefix -> full Category name (docs/DatabaseSchema.md identifier convention).
 PREFIX_TO_CATEGORY = {
@@ -60,7 +61,7 @@ PREFIX_TO_CATEGORY = {
 VALID_CATEGORIES = set(PREFIX_TO_CATEGORY.values())
 VALID_FORMATS = {"Online", "In-person", "Hybrid", "UNKNOWN"}
 VALID_STATUSES = {"Active", "Upcoming", "Archived"}
-VALID_SCOPES = {"International", "US only"}
+VALID_SCOPES = {"International", "Türkiye only", "US only"}
 
 ID_RE = re.compile(r"^(" + "|".join(PREFIX_TO_CATEGORY) + r")-(\d{4})$")
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -114,6 +115,7 @@ def validate():
 
     seen_ids = {}
     numbers_by_prefix = {}
+    qualifies_refs = []  # (label, referenced_id) — checked for existence after the loop.
 
     for row_idx, raw in enumerate(rows[1:], start=2):
         row = {h: _cell_str(v) for h, v in zip(EXPECTED_HEADERS, raw)}
@@ -196,6 +198,25 @@ def validate():
             errors.append(
                 f"{label}: Official_URL '{url}' must start with http:// or https://."
             )
+
+        # Qualifies_For (optional): must be a well-formed ID that isn't self-referential.
+        qualifies = row["Qualifies_For"]
+        if qualifies:
+            if not ID_RE.match(qualifies):
+                errors.append(
+                    f"{label}: Qualifies_For '{qualifies}' must be a valid ID "
+                    "(PREFIX-NNNN) referencing an existing record."
+                )
+            elif qualifies == rid:
+                errors.append(f"{label}: Qualifies_For cannot reference the record's own ID.")
+            else:
+                qualifies_refs.append((label, qualifies))
+
+    # Qualifies_For must point at a record that actually exists (checked after the
+    # full pass so a stage may appear before or after the final it feeds into).
+    for label, ref in qualifies_refs:
+        if ref not in seen_ids:
+            errors.append(f"{label}: Qualifies_For '{ref}' does not match any record's ID.")
 
     # Sequential-ID gaps are a warning, not an error (records can be archived).
     for prefix, numbers in numbers_by_prefix.items():

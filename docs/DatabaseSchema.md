@@ -50,7 +50,8 @@ Column order must be preserved unless a documented structural change is made.
 | 13| `Status`              | enum            | Yes      | `Active`, `Upcoming`, `Archived`. `Archived` is used instead of deleting a record. |
 | 14| `Last_Verified`       | date (ISO)      | Yes      | `YYYY-MM-DD` the contributor last confirmed this record against the official source. |
 | 15| `Notes`               | string          | No       | Any additional context that doesn't fit another column. |
-| 16| `Eligibility_Scope`   | enum            | Yes      | Who is eligible by citizenship/residency: `International` (open to students worldwide, including Türkiye) or `US only` (limited to U.S. citizens/permanent residents, including U.S. state-restricted programs). Nationality nuances stay in `Eligibility`. |
+| 16| `Eligibility_Scope`   | enum            | Yes      | Who is eligible by citizenship/residency: `International` (open to students worldwide, including Türkiye), `Türkiye only` (limited to students in Türkiye — e.g. national olympiads and other qualifying stages), or `US only` (limited to U.S. citizens/permanent residents, including U.S. state-restricted programs). Nationality nuances stay in `Eligibility`. |
+| 17| `Qualifies_For`       | string (ID)     | No       | For a national/regional qualifying stage, the `ID` of the international opportunity it feeds into (e.g. `COMP-0001`). Must reference an existing record. Leave empty for stand-alone opportunities. Used by the website to show the local pathway to an international competition. |
 
 ---
 
@@ -58,7 +59,21 @@ Column order must be preserved unless a documented structural change is made.
 
 * `UNKNOWN` — the official source does not state this information. Never guess or estimate.
 * `Rolling` — valid only for `Application_Deadline`, when the official source explicitly states rolling admissions.
-* Empty cells are not used; every applicable column must contain one of the above instead.
+* Empty cells are not used; every applicable required column must contain one of the above instead. Optional columns (`Event_Dates`, `Notes`, `Qualifies_For`) may legitimately be empty.
+
+---
+
+## Qualifying Stages (National Pathways)
+
+Many international competitions cannot be entered directly: a student first has to advance through a **national selection process** in their own country. Academic Atlas records these local stages as their own entries so that a student can see the full route to an international final.
+
+A qualifying-stage record is a normal record that additionally:
+
+* sets `Qualifies_For` to the `ID` of the international opportunity it leads to (e.g. Türkiye's national mathematics olympiad sets `Qualifies_For` = the IMO record's ID);
+* uses `Country_Region` to name the country/region the stage is run in (e.g. `Türkiye`);
+* sets `Eligibility_Scope` to `Türkiye only` (or the relevant national scope) rather than `International`.
+
+The website reads `Qualifies_For` to display, on an international competition, the national pathway(s) that lead to it, and to link each stage back to its final. This keeps the local and international views connected without duplicating information.
 
 ---
 

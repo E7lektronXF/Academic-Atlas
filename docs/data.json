@@ -15,7 +15,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Team selection is handled by each country's national olympiad committee, not centrally; host country/dates change yearly.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0002",
@@ -33,7 +34,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Selection handled nationally; host country/dates change yearly.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0003",
@@ -51,7 +53,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Selection handled nationally; host country/dates change yearly.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0004",
@@ -69,7 +72,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Selection handled nationally; host country/dates change yearly.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0005",
@@ -87,7 +91,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Selection handled nationally; host country/dates change yearly.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0006",
@@ -105,7 +110,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Entry is via affiliated local fairs, not direct application; affiliate fair deadlines vary by region.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0007",
@@ -123,7 +129,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "The 2026 cycle is closed (registration by March 31, submission by May 31, 2026). Runs annually; the 2027 cycle typically opens registration in early February with a late-May submission deadline. Free to enter by the regular deadline.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0008",
@@ -141,7 +148,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Regional round dates/fees vary by location; check local round listing.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "RES-0001",
@@ -159,7 +167,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Applications typically open in the fall with a mid-December deadline (RSI 2026 was December 10, 2025). RSI 2027 dates are announced by CEE in fall 2026. Highly selective; free to attend.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "RES-0002",
@@ -177,7 +186,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "The application link appears on the MIT PRIMES site in September; the deadline is typically around December 1 (PRIMES 2026 was December 1, 2025). Greater-Boston students for PRIMES; PRIMES-USA is open to U.S. students nationwide.",
-    "Eligibility_Scope": "US only"
+    "Eligibility_Scope": "US only",
+    "Qualifies_For": null
   },
   {
     "ID": "RES-0003",
@@ -195,7 +205,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Requires school nomination (max 2 per school); highly selective (~5% acceptance rate).",
-    "Eligibility_Scope": "US only"
+    "Eligibility_Scope": "US only",
+    "Qualifies_For": null
   },
   {
     "ID": "SUM-0001",
@@ -213,7 +224,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Cost varies by track/campus; need-based financial aid available.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "SUM-0002",
@@ -231,7 +243,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Tuition varies by session; see site for current pricing and aid options.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "SUM-0003",
@@ -249,7 +262,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Multiple program tracks (Summer/Semester/Saturdays) with different eligibility and formats.",
-    "Eligibility_Scope": "US only"
+    "Eligibility_Scope": "US only",
+    "Qualifies_For": null
   },
   {
     "ID": "SCHOL-0001",
@@ -267,7 +281,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Only open to UWC graduates, not the general public.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "SCHOL-0002",
@@ -285,7 +300,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "The 2026 National College Match application is due October 1, 2026 (11:59pm PT); match rankings due October 15. QuestBridge also runs the College Prep Scholarship for juniors with a late-March deadline.",
-    "Eligibility_Scope": "US only"
+    "Eligibility_Scope": "US only",
+    "Qualifies_For": null
   },
   {
     "ID": "COURSE-0001",
@@ -303,7 +319,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Tuition varies significantly by course/length; see course catalog for exact pricing.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COURSE-0002",
@@ -321,7 +338,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Full diploma-granting school, not a single course; admissions is selective.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "INNOV-0001",
@@ -339,7 +357,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Runs on an annual season; the 2025-26 season opened August 28, 2025 (activation/registration through October 30) with the Innovation Summit in April 2026. The 2026-27 season is expected to open in late August 2026.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "INNOV-0002",
@@ -357,7 +376,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Program registration is managed via technovationchallenge.org; confirm current eligibility there.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "JOUR-0001",
@@ -375,7 +395,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Fixed quarterly submission deadlines each year: February 1, May 1, August 1, and November 1. The next deadline is August 1, 2026 (Winter issue). Published quarterly.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "JOUR-0002",
@@ -393,7 +414,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Double-blind peer review; APC charged in two phases.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "CONF-0001",
@@ -411,7 +433,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-16",
     "Notes": "Held annually in late January; check official site for current session dates/fees.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0009",
@@ -429,7 +452,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "The 2027 application is open June 1 - November 5, 2026 (8pm ET). Top 40 finalists compete in Washington, D.C., in March.",
-    "Eligibility_Scope": "US only"
+    "Eligibility_Scope": "US only",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0010",
@@ -447,7 +471,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "2026 entries are due September 15, 2026 (11:59pm PDT); entrants must peer-review at least five other submissions by September 30.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "INNOV-0003",
@@ -465,7 +490,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Runs annually; the 2026 cycle ran September 17, 2025 - January 15, 2026 with the summit in late April 2026. The next cycle typically opens in September with a mid-January deadline.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "INNOV-0004",
@@ -483,7 +509,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Runs annually; the 2026 project deadline was March 1, 2026 (extended to March 7) with finals in June 2026 at RIT. Check the official site for 2027 dates.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "SCHOL-0003",
@@ -501,7 +528,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "The 2027 application is open August 3 - September 30, 2026 (5pm ET). 150 scholars are selected annually.",
-    "Eligibility_Scope": "US only"
+    "Eligibility_Scope": "US only",
+    "Qualifies_For": null
   },
   {
     "ID": "SCHOL-0004",
@@ -519,7 +547,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "The 2027 application is available July 15 - September 15, 2026. A last-dollar award covering full cost of attendance beyond other aid.",
-    "Eligibility_Scope": "US only"
+    "Eligibility_Scope": "US only",
+    "Qualifies_For": null
   },
   {
     "ID": "SUM-0004",
@@ -537,7 +566,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Held each summer at Boston University; the 2026 program ran June 28 - August 8 with a February 27, 2026 application deadline. The 2027 application typically opens in winter with a late-February/early-March deadline.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "SUM-0005",
@@ -555,7 +585,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Held each summer; the 2026 application deadline was around March 8, 2026 (now closed). The 2027 application typically opens in winter with an early-March deadline.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "SUM-0006",
@@ -573,7 +604,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Hosted at UC campuses including Davis, Irvine, San Diego, and Santa Cruz. The summer 2026 application closed February 6, 2026; the 2027 application typically opens in January with an early-February deadline.",
-    "Eligibility_Scope": "US only"
+    "Eligibility_Scope": "US only",
+    "Qualifies_For": null
   },
   {
     "ID": "JOUR-0003",
@@ -591,7 +623,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Rolling submissions; a single $49 fee covers the full review-and-publication process. As of March 2026, JEI focuses on hypothesis-driven life and experimental physical sciences (no purely computational or dataset-only projects).",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "JOUR-0004",
@@ -609,7 +642,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Rolling submissions with no submission or publication fees.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "RES-0004",
@@ -627,7 +661,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Term-based rolling admission; attending an info session unlocks a priority deadline. On average, fewer than a third of applicants are admitted.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COURSE-0003",
@@ -645,7 +680,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Self-paced with open enrollment via edX; the audit track (lectures and assignments) is free, with an optional paid verified certificate.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0011",
@@ -663,7 +699,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Participation is through each country's national olympiad selection; the 19th IOAA is in Hanoi, Vietnam. Turkiye competes via its national astronomy olympiad.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0012",
@@ -681,7 +718,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Entry is via national linguistics olympiad selection; the 23rd IOL is in Bucharest, Romania.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0013",
@@ -699,7 +737,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Entry is via national geography olympiad selection. iGeo 2026 is hosted in Istanbul, Turkiye.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "COMP-0014",
@@ -717,7 +756,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Entry is via each country's national mathematical olympiad selection for female students; 67 countries participated in 2026. Turkiye participates.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "SUM-0007",
@@ -735,7 +775,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Apply by about 31 May each year (the 2026 deadline was 31 May; program 19 Jul - 1 Aug 2026). On-campus and virtual options available.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "INNOV-0005",
@@ -753,7 +794,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Participation is via each country's national FIRST Global team. The 2026 event is in Incheon, Korea (theme: Igniting Innovation).",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "CONF-0002",
@@ -771,7 +813,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Schools register delegations; about 3,200 participants from ~200 schools across 100+ countries. Held at the end of January in The Hague.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "CONF-0003",
@@ -789,7 +832,8 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Held each January at Yale; 1,800+ delegates from 40+ countries. YIRA also runs YMUN conferences abroad (Korea, Dubai, Taiwan, Europe, Singapore).",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
   },
   {
     "ID": "SCHOL-0005",
@@ -807,6 +851,159 @@
     "Status": "Active",
     "Last_Verified": "2026-07-17",
     "Notes": "Applications run on an annual cycle (historically opening in the fall/winter). 100 Global Winners are selected each year and receive lifelong benefits. Open worldwide.",
-    "Eligibility_Scope": "International"
+    "Eligibility_Scope": "International",
+    "Qualifies_For": null
+  },
+  {
+    "ID": "COMP-0015",
+    "Category": "International competitions",
+    "Name": "TÜBİTAK National Mathematics Olympiad (Ulusal Matematik Olimpiyatı)",
+    "Organizer": "TÜBİTAK (Scientific and Technological Research Council of Türkiye) — BİDEB",
+    "Country_Region": "Türkiye",
+    "Eligibility": "Students enrolled at schools in Türkiye (roughly grades 9-11 for the high-school branches; final-year students are generally excluded from the international-team track).",
+    "Description": "Türkiye's national mathematics olympiad, run by TÜBİTAK as a two-stage exam: a multiple-choice first stage held across all 81 provinces (and the TRNC), then a written/practical second stage. Top performers train at national team camps and are selected for Türkiye's team to the International Mathematical Olympiad (IMO).",
+    "Official_URL": "https://bilimolimpiyatlari.tubitak.gov.tr/tr/ulusal-bilim-olimpiyatlari",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-05-16 (first-stage exam; annual)",
+    "Cost": "Free",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-18",
+    "Notes": "Part of the TÜBİTAK Science Olympiads (TÜBİTAK 2202, run by BİDEB). The 2026 first-stage exam was held on 16 May 2026; application dates are announced each year through ebideb.tubitak.gov.tr.",
+    "Eligibility_Scope": "Türkiye only",
+    "Qualifies_For": "COMP-0001"
+  },
+  {
+    "ID": "COMP-0016",
+    "Category": "International competitions",
+    "Name": "TÜBİTAK National Physics Olympiad (Ulusal Fizik Olimpiyatı)",
+    "Organizer": "TÜBİTAK (Scientific and Technological Research Council of Türkiye) — BİDEB",
+    "Country_Region": "Türkiye",
+    "Eligibility": "Students enrolled at schools in Türkiye (roughly grades 9-11 for the high-school branches; final-year students are generally excluded from the international-team track).",
+    "Description": "Türkiye's national physics olympiad, run by TÜBİTAK as a two-stage exam: a multiple-choice first stage held across all 81 provinces (and the TRNC), then a written/practical second stage. Top performers train at national team camps and are selected for Türkiye's team to the International Physics Olympiad (IPhO).",
+    "Official_URL": "https://bilimolimpiyatlari.tubitak.gov.tr/tr/ulusal-bilim-olimpiyatlari",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-05-16 (first-stage exam; annual)",
+    "Cost": "Free",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-18",
+    "Notes": "Part of the TÜBİTAK Science Olympiads (TÜBİTAK 2202, run by BİDEB). The 2026 first-stage exam was held on 16 May 2026; application dates are announced each year through ebideb.tubitak.gov.tr.",
+    "Eligibility_Scope": "Türkiye only",
+    "Qualifies_For": "COMP-0002"
+  },
+  {
+    "ID": "COMP-0017",
+    "Category": "International competitions",
+    "Name": "TÜBİTAK National Chemistry Olympiad (Ulusal Kimya Olimpiyatı)",
+    "Organizer": "TÜBİTAK (Scientific and Technological Research Council of Türkiye) — BİDEB",
+    "Country_Region": "Türkiye",
+    "Eligibility": "Students enrolled at schools in Türkiye (roughly grades 9-11 for the high-school branches; final-year students are generally excluded from the international-team track).",
+    "Description": "Türkiye's national chemistry olympiad, run by TÜBİTAK as a two-stage exam: a multiple-choice first stage held across all 81 provinces (and the TRNC), then a written/practical second stage. Top performers train at national team camps and are selected for Türkiye's team to the International Chemistry Olympiad (IChO).",
+    "Official_URL": "https://bilimolimpiyatlari.tubitak.gov.tr/tr/ulusal-bilim-olimpiyatlari",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-05-16 (first-stage exam; annual)",
+    "Cost": "Free",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-18",
+    "Notes": "Part of the TÜBİTAK Science Olympiads (TÜBİTAK 2202, run by BİDEB). The 2026 first-stage exam was held on 16 May 2026; application dates are announced each year through ebideb.tubitak.gov.tr.",
+    "Eligibility_Scope": "Türkiye only",
+    "Qualifies_For": "COMP-0003"
+  },
+  {
+    "ID": "COMP-0018",
+    "Category": "International competitions",
+    "Name": "TÜBİTAK National Informatics Olympiad (Ulusal Bilgisayar Olimpiyatı)",
+    "Organizer": "TÜBİTAK (Scientific and Technological Research Council of Türkiye) — BİDEB",
+    "Country_Region": "Türkiye",
+    "Eligibility": "Students enrolled at schools in Türkiye (roughly grades 9-11 for the high-school branches; final-year students are generally excluded from the international-team track).",
+    "Description": "Türkiye's national informatics/computing olympiad, run by TÜBİTAK as a two-stage exam: a multiple-choice first stage held across all 81 provinces (and the TRNC), then a written/practical second stage. Top performers train at national team camps and are selected for Türkiye's team to the International Olympiad in Informatics (IOI).",
+    "Official_URL": "https://bilimolimpiyatlari.tubitak.gov.tr/tr/ulusal-bilim-olimpiyatlari",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-05-16 (first-stage exam; annual)",
+    "Cost": "Free",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-18",
+    "Notes": "Part of the TÜBİTAK Science Olympiads (TÜBİTAK 2202, run by BİDEB). The 2026 first-stage exam was held on 16 May 2026; application dates are announced each year through ebideb.tubitak.gov.tr.",
+    "Eligibility_Scope": "Türkiye only",
+    "Qualifies_For": "COMP-0004"
+  },
+  {
+    "ID": "COMP-0019",
+    "Category": "International competitions",
+    "Name": "TÜBİTAK National Biology Olympiad (Ulusal Biyoloji Olimpiyatı)",
+    "Organizer": "TÜBİTAK (Scientific and Technological Research Council of Türkiye) — BİDEB",
+    "Country_Region": "Türkiye",
+    "Eligibility": "Students enrolled at schools in Türkiye (roughly grades 9-11 for the high-school branches; final-year students are generally excluded from the international-team track).",
+    "Description": "Türkiye's national biology olympiad, run by TÜBİTAK as a two-stage exam: a multiple-choice first stage held across all 81 provinces (and the TRNC), then a written/practical second stage. Top performers train at national team camps and are selected for Türkiye's team to the International Biology Olympiad (IBO).",
+    "Official_URL": "https://bilimolimpiyatlari.tubitak.gov.tr/tr/ulusal-bilim-olimpiyatlari",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-05-16 (first-stage exam; annual)",
+    "Cost": "Free",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-18",
+    "Notes": "Part of the TÜBİTAK Science Olympiads (TÜBİTAK 2202, run by BİDEB). The 2026 first-stage exam was held on 16 May 2026; application dates are announced each year through ebideb.tubitak.gov.tr.",
+    "Eligibility_Scope": "Türkiye only",
+    "Qualifies_For": "COMP-0005"
+  },
+  {
+    "ID": "COMP-0020",
+    "Category": "International competitions",
+    "Name": "Türkiye Astronomy and Astrophysics Olympiad (TROAA)",
+    "Organizer": "TÜBİTAK — Türkiye Astronomy and Astrophysics Olympiads (TROAA)",
+    "Country_Region": "Türkiye",
+    "Eligibility": "Students at schools in Türkiye who are high-school students (or graduate in the competition year) and under 20 as of 1 July of the competition year.",
+    "Description": "Türkiye's national astronomy and astrophysics olympiad. Candidates are ranked on theoretical, data-analysis and observational performance; the top five form the national team (with a reserve) and attend team camps before the international final.",
+    "Official_URL": "https://olimpiyat.astronomi.org/",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-05-16 (first-stage exam; annual)",
+    "Cost": "Free",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-18",
+    "Notes": "Run within the TÜBİTAK Science Olympiads (astronomy-astrophysics branch); TROAA coordinates the selection and team camps for the International Olympiad on Astronomy and Astrophysics (IOAA). Application dates are announced annually.",
+    "Eligibility_Scope": "Türkiye only",
+    "Qualifies_For": "COMP-0011"
+  },
+  {
+    "ID": "COMP-0021",
+    "Category": "International competitions",
+    "Name": "TÜBİTAK National Geography Olympiad (Ulusal Coğrafya Olimpiyatı)",
+    "Organizer": "TÜBİTAK (Scientific and Technological Research Council of Türkiye) — BİDEB",
+    "Country_Region": "Türkiye",
+    "Eligibility": "Students enrolled at schools in Türkiye (roughly grades 9-11 for the high-school branches; final-year students are generally excluded from the international-team track).",
+    "Description": "Türkiye's national geography olympiad, run by TÜBİTAK as a two-stage exam: a multiple-choice first stage held across all 81 provinces (and the TRNC), then a written/practical second stage. Top performers train at national team camps and are selected for Türkiye's team to the International Geography Olympiad (iGeo).",
+    "Official_URL": "https://bilimolimpiyatlari.tubitak.gov.tr/tr/ulusal-bilim-olimpiyatlari",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "2026-05-16 (first-stage exam; annual)",
+    "Cost": "Free",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-18",
+    "Notes": "Part of the TÜBİTAK Science Olympiads (TÜBİTAK 2202, run by BİDEB). The 2026 first-stage exam was held on 16 May 2026; application dates are announced each year through ebideb.tubitak.gov.tr. Türkiye's iGeo team is selected through national geography selection, coordinated with the Turkish Geographical Society (Türk Coğrafya Kurumu, TCK), an IGU member.",
+    "Eligibility_Scope": "Türkiye only",
+    "Qualifies_For": "COMP-0013"
+  },
+  {
+    "ID": "COMP-0022",
+    "Category": "International competitions",
+    "Name": "TÜBİTAK 2204-A High School Students Research Projects Competition (Lise Öğrencileri Araştırma Projeleri Yarışması)",
+    "Organizer": "TÜBİTAK (Scientific and Technological Research Council of Türkiye)",
+    "Country_Region": "Türkiye",
+    "Eligibility": "High-school students at schools in Türkiye, entering an original research project (individually or in pairs, with an advisor).",
+    "Description": "Türkiye's national high-school research-project competition, judged through regional and final stages across many subject areas. The strongest projects are selected to represent Türkiye at the Regeneron International Science and Engineering Fair (ISEF).",
+    "Official_URL": "https://tubitak.gov.tr/en/competitions/2204-high-school-students-research-projects-competition",
+    "Application_Deadline": "UNKNOWN",
+    "Event_Dates": "UNKNOWN",
+    "Cost": "Free",
+    "Format": "In-person",
+    "Status": "Active",
+    "Last_Verified": "2026-07-18",
+    "Notes": "Türkiye's ISEF-affiliated fair. Projects advance through preliminary/regional and final evaluations; top projects are chosen to compete at ISEF. Application timing is announced annually by TÜBİTAK.",
+    "Eligibility_Scope": "Türkiye only",
+    "Qualifies_For": "COMP-0006"
   }
 ]

@@ -28,6 +28,8 @@ Academic Atlas is designed to cover opportunities such as:
 
 Additional categories may be added as the project evolves.
 
+For international competitions, Academic Atlas also records the **national qualifying stages** that feed into them — for example, the TÜBİTAK national olympiads that select Türkiye's teams for the IMO, IPhO, IChO and other international olympiads. Each stage is linked to its international final so students can see the full pathway.
+
 ---
 
 ## Project Goals
@@ -114,7 +116,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/DatabaseSchema.md`](docs/Dat
 
 ## Project Status
 
-Current Version: **v0.6.5**
+Current Version: **v0.7.0**
 
 Current Phase: **Foundation**
 

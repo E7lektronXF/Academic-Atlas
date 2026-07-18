@@ -6,7 +6,7 @@
 <title>Academic Atlas — International academic opportunities for students</title>
 
 <meta name="description" content="An open, AI-maintainable database of verified international academic opportunities for high school students: competitions, research programs, summer schools, scholarships, journals, and more.">
-<meta name="theme-color" content="#1f4e78">
+<meta name="theme-color" content="#14294d">
 <link rel="canonical" href="https://e7lektronxf.github.io/Academic-Atlas/">
 
 <meta property="og:type" content="website">
@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="Academic Atlas">
 <meta name="twitter:description" content="An open, AI-maintainable database of verified international academic opportunities for high school students.">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231f4e78'/%3E%3Ctext x='50' y='72' font-size='64' text-anchor='middle' fill='white'%3E%F0%9F%A7%AD%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2314294d'/%3E%3Crect x='6' y='84' width='88' height='10' rx='5' fill='%238a1f2b'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='%23f6efdb'%3E%F0%9F%A7%AD%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,8 @@
     <span class="scope-label">Who can apply:</span>
     <div class="segmented" role="group" aria-label="Filter by eligibility">
       <button type="button" class="seg" data-scope="">All</button>
-      <button type="button" class="seg" data-scope="intl">🌍 Open to Türkiye</button>
+      <button type="button" class="seg" data-scope="intl">🌍 International</button>
+      <button type="button" class="seg" data-scope="tr">🇹🇷 Türkiye</button>
       <button type="button" class="seg" data-scope="us">🇺🇸 US only</button>
     </div>
   </div>
@@ -55,9 +56,12 @@
   <!-- Home view: category tiles + a small "closing soon" strip -->
   <section id="home-view" hidden>
     <div class="intro">
-      <h1>Discover opportunities, one field at a time.</h1>
+      <h1>Discover opportunities, <span class="accent">one field at a time.</span></h1>
       <p>Browse a curated, source-verified database of international competitions, research programs,
-        summer schools, scholarships, journals, and more. Pick a category to explore — or search across everything.</p>
+        summer schools, scholarships, journals, and more — including the <strong>Türkiye national
+        pathways</strong> that lead into the big international olympiads. Pick a category to explore, or
+        search across everything.</p>
+      <ul id="intro-stats" class="intro-stats"></ul>
     </div>
 
     <section class="closing-soon" id="closing-soon" hidden aria-label="Opportunities closing soon">

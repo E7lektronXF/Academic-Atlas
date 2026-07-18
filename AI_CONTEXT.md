@@ -73,6 +73,7 @@ General standards include:
 * Consistent naming conventions.
 * Use `UNKNOWN` instead of guessing missing information.
 * Preserve column order unless a documented structural change is made.
+* Link national/regional qualifying stages to their international final with `Qualifies_For`, and mark them `Eligibility_Scope = Türkiye only` (see `docs/DatabaseSchema.md` → Qualifying Stages).
 
 ---
 

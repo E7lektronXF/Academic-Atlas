@@ -9,16 +9,16 @@
 
 const PAGE_SIZE = 9;
 
-// Icon + accent per category (accent matches the badge colors in style.css).
+// Icon + accent per category (colors kept in sync with the --cat-* tokens in style.css).
 const CATEGORY_META = {
-  "International competitions":            { icon: "🏆", color: "#d97706", blurb: "Olympiads, essay prizes, and global contests." },
-  "Research programs / opportunities":    { icon: "🔬", color: "#2563eb", blurb: "Mentored research and academic institutes." },
-  "Summer schools":                       { icon: "☀️", color: "#ea580c", blurb: "Intensive residential summer programs." },
-  "Scholarships":                         { icon: "🎓", color: "#16a34a", blurb: "Funding and full-ride awards." },
-  "Academic courses":                     { icon: "📚", color: "#7c3aed", blurb: "Structured courses and online learning." },
-  "Innovation challenges":                { icon: "💡", color: "#db2777", blurb: "Entrepreneurship and design challenges." },
-  "Academic journals & publications":     { icon: "📰", color: "#0891b2", blurb: "Publish your original research." },
-  "Conferences & academic events":        { icon: "🎤", color: "#ca8a04", blurb: "Conferences, summits, and MUNs." },
+  "International competitions":            { icon: "🏆", color: "#a4243b", blurb: "Olympiads, essay prizes, and global contests — with the Türkiye pathways that lead to them." },
+  "Research programs / opportunities":    { icon: "🔬", color: "#1f7d89", blurb: "Mentored research and academic institutes." },
+  "Summer schools":                       { icon: "☀️", color: "#c9741b", blurb: "Intensive residential summer programs." },
+  "Scholarships":                         { icon: "🎓", color: "#2f8f5b", blurb: "Funding and full-ride awards." },
+  "Academic courses":                     { icon: "📚", color: "#7a54a3", blurb: "Structured courses and online learning." },
+  "Innovation challenges":                { icon: "💡", color: "#c14d86", blurb: "Entrepreneurship and design challenges." },
+  "Academic journals & publications":     { icon: "📰", color: "#3f7cbf", blurb: "Publish your original research." },
+  "Conferences & academic events":        { icon: "🎤", color: "#b8862a", blurb: "Conferences, summits, and MUNs." },
 };
 const CATEGORY_ORDER = Object.keys(CATEGORY_META);
 
@@ -36,7 +36,7 @@ const state = {
 
 const el = {};
 ["home-view","browse-view","scope-bar","closing-soon","closing-soon-cards","category-grid",
- "browse-title","result-count","cards","empty-state","error-state","load-more",
+ "intro-stats","browse-title","result-count","cards","empty-state","error-state","load-more",
  "search","format-filter","status-filter","sort","clear-filters",
  "detail-backdrop","detail-panel","detail-body","detail-close"].forEach((id) => {
   el[id] = document.getElementById(id);
@@ -128,17 +128,90 @@ function freshness(record) {
 
 // --- filtering & sorting ----------------------------------------------------
 
-// Eligibility scope: "intl" = open to Türkiye/international, "us" = US only.
+// Eligibility scope: "intl" = open worldwide, "tr" = Türkiye only, "us" = US only.
 function scopeMatches(r) {
   if (state.scope === "intl") return r.Eligibility_Scope === "International";
+  if (state.scope === "tr") return r.Eligibility_Scope === "Türkiye only";
   if (state.scope === "us") return r.Eligibility_Scope === "US only";
   return true;
 }
 
 function scopePill(r) {
   if (r.Eligibility_Scope === "US only") return pill("us", "🇺🇸 US citizens/residents only");
-  if (r.Eligibility_Scope === "International") return pill("intl", "🌍 Open to Türkiye");
+  if (r.Eligibility_Scope === "Türkiye only") return pill("tr", "🇹🇷 Students in Türkiye");
+  if (r.Eligibility_Scope === "International") return pill("intl", "🌍 Open worldwide");
   return "";
+}
+
+// --- national pathways (Qualifies_For) --------------------------------------
+// A record with Qualifies_For set is a national/regional qualifying stage that
+// feeds into another (usually international) opportunity.
+
+// Prefer a trailing acronym in parentheses, e.g. "…Olympiad (IMO)" -> "IMO".
+function acronym(name) {
+  const m = String(name ?? "").match(/\(([^)]+)\)\s*$/);
+  return m ? m[1] : String(name ?? "");
+}
+function pathwayChildren(record) {
+  return state.records.filter((r) => r.Qualifies_For === record.ID);
+}
+function pathwayParent(record) {
+  return has(record.Qualifies_For)
+    ? state.records.find((r) => r.ID === record.Qualifies_For)
+    : null;
+}
+
+// Small pill on a card telling which final a national stage leads to.
+function pathwayPill(record) {
+  const parent = pathwayParent(record);
+  if (!parent) return "";
+  return pill("pathway", "→ qualifies for " + acronym(parent.Name));
+}
+
+// A compact deadline label used inside pathway rows.
+function deadlineShort(record) {
+  const info = deadlineInfo(record);
+  if (info.kind === "rolling") return "Rolling";
+  if (info.kind === "future") return fmtDate(info.raw);
+  if (info.kind === "past") return "Annual — next cycle";
+  return "Announced annually";
+}
+
+// The pathway section shown inside a detail panel (parent link + child stages).
+function pathwayHtml(record) {
+  const parent = pathwayParent(record);
+  const kids = pathwayChildren(record);
+  let html = "";
+
+  if (parent) {
+    html += `<div class="pathway-parent">
+      <span class="pathway-kicker">Qualifying stage — leads to</span>
+      <button type="button" class="pathway-item" data-id="${escapeAttr(parent.ID)}">
+        <span class="pathway-arrow" aria-hidden="true">↑</span>
+        <span>
+          <span class="pathway-name">${escapeHtml(parent.Name)}</span>
+          <span class="pathway-sub">${escapeHtml(parent.Country_Region)} · the international final</span>
+        </span>
+        <span class="pathway-cue">View →</span>
+      </button>
+    </div>`;
+  }
+
+  if (kids.length) {
+    const label = kids.length === 1 ? "How students in Türkiye qualify" : "National pathways to this competition";
+    html += `<div class="pathway-block">
+      <span class="pathway-kicker">🇹🇷 ${escapeHtml(label)}</span>
+      <div class="pathway-list">` +
+      kids.map((k) => `<button type="button" class="pathway-item" data-id="${escapeAttr(k.ID)}">
+          <span>
+            <span class="pathway-name">${escapeHtml(k.Name)}</span>
+            <span class="pathway-sub">${escapeHtml(k.Country_Region)} · ${escapeHtml(deadlineShort(k))}</span>
+          </span>
+          <span class="pathway-cue">View →</span>
+        </button>`).join("") +
+      `</div></div>`;
+  }
+  return html;
 }
 
 function matchesFilters(r) {
@@ -173,8 +246,9 @@ function categoryBadge(category) {
 }
 
 function cardHtml(r) {
+  const pathwayCls = has(r.Qualifies_For) ? " is-pathway" : "";
   return `
-    <article class="card" role="button" tabindex="0" data-id="${escapeAttr(r.ID)}"
+    <article class="card${pathwayCls}" role="button" tabindex="0" data-id="${escapeAttr(r.ID)}"
              aria-label="${escapeAttr(r.Name)} — view details">
       <div class="card-top">
         <h3>${escapeHtml(r.Name)}</h3>
@@ -184,6 +258,7 @@ function cardHtml(r) {
       <p class="description">${escapeHtml(r.Description)}</p>
       <div class="pill-row">
         ${scopePill(r)}
+        ${pathwayPill(r)}
         ${deadlinePill(r)}
         ${formatPill(r)}
         ${costPill(r)}
@@ -231,6 +306,7 @@ function detailHtml(r) {
       ${detailRow("Status", r.Status, "d-status")}
     </div>
     ${notes}
+    ${pathwayHtml(r)}
     <div class="detail-footer">
       ${link}
       ${fresh ? `<span class="freshness${fresh.stale ? " stale" : ""}">${escapeHtml(fresh.text)} · ${escapeHtml(r.ID)}</span>` : ""}
@@ -250,6 +326,17 @@ function render() {
 function renderHome() {
   el["browse-view"].hidden = true;
   el["home-view"].hidden = false;
+
+  // Live overview stats (whole database, independent of the active filter).
+  if (el["intro-stats"]) {
+    const total = state.records.length;
+    const cats = CATEGORY_ORDER.filter((c) => state.records.some((r) => r.Category === c)).length;
+    const pathways = state.records.filter((r) => has(r.Qualifies_For)).length;
+    el["intro-stats"].innerHTML =
+      `<li>🎓 <b>${total}</b> verified opportunities</li>` +
+      `<li>🗂️ <b>${cats}</b> categories</li>` +
+      `<li>🇹🇷 <b>${pathways}</b> Türkiye national pathways</li>`;
+  }
 
   // Category tiles with live counts (respecting the active eligibility scope).
   const inScope = state.records.filter(scopeMatches);
@@ -329,7 +416,7 @@ function readUrl() {
   state.category = p.get("category") || "";
   state.format = p.get("format") || "";
   state.status = p.get("status") || "";
-  state.scope = ["intl", "us"].includes(p.get("scope")) ? p.get("scope") : "";
+  state.scope = ["intl", "tr", "us"].includes(p.get("scope")) ? p.get("scope") : "";
   state.sort = SORTERS[p.get("sort")] ? p.get("sort") : "deadline";
   state.id = p.get("id") || "";
   state.shown = PAGE_SIZE;
@@ -418,8 +505,9 @@ function wireEvents() {
       navigateTo(link.getAttribute("href"));
       return;
     }
-    const card = e.target.closest(".card[data-id]");
-    if (card) openDetailById(card.dataset.id);
+    // Cards, and pathway rows inside the detail panel, both open a detail view.
+    const opener = e.target.closest(".card[data-id], .pathway-item[data-id]");
+    if (opener) openDetailById(opener.dataset.id);
   });
   el["cards"].addEventListener("keydown", cardKeydown);
   el["closing-soon-cards"].addEventListener("keydown", cardKeydown);

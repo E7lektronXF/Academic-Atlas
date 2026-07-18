@@ -6,6 +6,26 @@ This project follows Semantic Versioning (`MAJOR.MINOR.PATCH`).
 
 ---
 
+## [0.7.0] - 2026-07-18
+
+### Added
+
+* **National pathways.** New optional schema column `Qualifies_For` links a national/regional qualifying stage to the international opportunity it feeds into (documented in `docs/DatabaseSchema.md` and enforced by `scripts/validate.py`, which also checks the reference resolves to a real record). A new `Eligibility_Scope` value `Türkiye only` marks opportunities limited to students in Türkiye.
+* 8 verified Türkiye national-stage records (45 → 53), each linked to its international final: the TÜBİTAK national olympiads in Mathematics (→ IMO), Physics (→ IPhO), Chemistry (→ IChO), Informatics (→ IOI), Biology (→ IBO) and Geography (→ iGeo), the Türkiye Astronomy & Astrophysics Olympiad / TROAA (→ IOAA), and the TÜBİTAK 2204-A High School Students Research Projects Competition (→ Regeneron ISEF).
+* Website: the detail view of an international competition now shows the **national pathway(s)** that lead into it, and each national stage links back to its international final. National-stage cards are marked with a crimson spine and a "→ qualifies for …" pill.
+* Website: a 🇹🇷 **Türkiye** eligibility filter (alongside All · 🌍 International · 🇺🇸 US only), shareable via `?scope=tr`, and a live stats line on the home page (opportunities · categories · Türkiye pathways).
+
+### Changed
+
+* Website recolored to a **dark-blue / dark-red / cream** palette — navy chrome, crimson accents, cream surfaces — across both the light and dark themes, with a retuned category and pill palette. `theme-color` and the favicon were updated to match.
+* The 🌍 filter label changed from "Open to Türkiye" to "International" (open worldwide) now that Türkiye has its own filter; the eligibility pill wording was updated accordingly.
+
+### Notes
+
+`database/AcademicAtlas.xlsx` remains the single source of truth; `docs/data.json` was regenerated with `scripts/xlsx_to_json.py` and passes `scripts/validate.py` (53 records). No existing verified records were removed or altered.
+
+---
+
 ## [0.6.5] - 2026-07-17
 
 ### Added
