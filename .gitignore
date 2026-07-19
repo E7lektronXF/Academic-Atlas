@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Spreadsheet lock files
+~$*.xlsx
+
+# OS cruft
+.DS_Store
+Thumbs.db

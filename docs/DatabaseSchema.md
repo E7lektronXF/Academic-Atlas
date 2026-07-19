@@ -52,6 +52,34 @@ Column order must be preserved unless a documented structural change is made.
 | 15| `Notes`               | string          | No       | Any additional context that doesn't fit another column. |
 | 16| `Eligibility_Scope`   | enum            | Yes      | Who is eligible by citizenship/residency: `International` (open to students worldwide, including Türkiye), `Türkiye only` (limited to students in Türkiye — e.g. national olympiads and other qualifying stages), or `US only` (limited to U.S. citizens/permanent residents, including U.S. state-restricted programs). Nationality nuances stay in `Eligibility`. |
 | 17| `Qualifies_For`       | string (ID)     | No       | For a national/regional qualifying stage, the `ID` of the international opportunity it feeds into (e.g. `COMP-0001`). Must reference an existing record. Leave empty for stand-alone opportunities. Used by the website to show the local pathway to an international competition. |
+| 18| `Subject`             | enum (multi)    | Yes      | One or more discipline tags from the **Subject Vocabulary** below, independent of `Category`. Multiple values are separated by a semicolon (`;`), e.g. `Physics; Mathematics`. Use `Interdisciplinary` when no single subject fits. |
+| 19| `Typical_Window`      | string          | No       | When the application window typically opens, for records whose exact next date is not yet published (`Application_Deadline = UNKNOWN`). Short month/season text, e.g. `September–October` or `Spring`. Leave empty when a concrete deadline is known. |
+
+---
+
+## Subject Vocabulary
+
+`Subject` classifies a record by academic discipline, independently of its `Category`, so students can browse by interest. A record may carry more than one value, separated by a semicolon (`;`) — e.g. `Physics; Mathematics`.
+
+| Subject | Covers |
+|---------|--------|
+| `Mathematics` | Pure and applied mathematics. |
+| `Physics` | Physics and astrophysics. |
+| `Chemistry` | Chemistry. |
+| `Biology` | Biology and the life sciences. |
+| `Computer Science` | Programming, informatics, algorithms, AI. |
+| `Engineering & Robotics` | Engineering, robotics, hardware design. |
+| `Earth & Space` | Astronomy, geography, geology, earth sciences. |
+| `Environment` | Environmental science and sustainability. |
+| `Economics & Business` | Economics, finance, entrepreneurship. |
+| `Social Sciences & Humanities` | History, philosophy, psychology, and other social sciences. |
+| `Linguistics` | Language and linguistics. |
+| `Writing` | Essay, journalism, creative and academic writing. |
+| `Arts & Design` | Visual, performing, and design disciplines. |
+| `Medicine & Health` | Medicine, public health, biomedical topics. |
+| `Interdisciplinary` | Spans multiple fields, or a general program with no single subject focus. |
+
+Adding a new subject is a structural change: add the value to this table **and** to `scripts/validate.py` before any record uses it.
 
 ---
 
@@ -59,7 +87,7 @@ Column order must be preserved unless a documented structural change is made.
 
 * `UNKNOWN` — the official source does not state this information. Never guess or estimate.
 * `Rolling` — valid only for `Application_Deadline`, when the official source explicitly states rolling admissions.
-* Empty cells are not used; every applicable required column must contain one of the above instead. Optional columns (`Event_Dates`, `Notes`, `Qualifies_For`) may legitimately be empty.
+* Empty cells are not used; every applicable required column must contain one of the above instead. Optional columns (`Event_Dates`, `Notes`, `Qualifies_For`, `Typical_Window`) may legitimately be empty.
 
 ---
 

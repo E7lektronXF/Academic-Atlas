@@ -42,10 +42,12 @@ EXPECTED_HEADERS = [
     "Notes",
     "Eligibility_Scope",
     "Qualifies_For",
+    "Subject",
+    "Typical_Window",
 ]
 
 # Optional columns may legitimately hold nothing; everything else is required.
-OPTIONAL_COLUMNS = {"Event_Dates", "Notes", "Qualifies_For"}
+OPTIONAL_COLUMNS = {"Event_Dates", "Notes", "Qualifies_For", "Typical_Window"}
 
 # Prefix -> full Category name (docs/DatabaseSchema.md identifier convention).
 PREFIX_TO_CATEGORY = {
@@ -62,6 +64,27 @@ VALID_CATEGORIES = set(PREFIX_TO_CATEGORY.values())
 VALID_FORMATS = {"Online", "In-person", "Hybrid", "UNKNOWN"}
 VALID_STATUSES = {"Active", "Upcoming", "Archived"}
 VALID_SCOPES = {"International", "Türkiye only", "US only"}
+
+# Controlled vocabulary for the multi-value Subject column (docs/DatabaseSchema.md
+# -> Subject Vocabulary). Values are separated by ';' within a cell.
+VALID_SUBJECTS = {
+    "Mathematics",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "Computer Science",
+    "Engineering & Robotics",
+    "Earth & Space",
+    "Environment",
+    "Economics & Business",
+    "Social Sciences & Humanities",
+    "Linguistics",
+    "Writing",
+    "Arts & Design",
+    "Medicine & Health",
+    "Interdisciplinary",
+}
+WINDOW_MAX_LEN = 40  # Typical_Window is free text but should stay short.
 
 ID_RE = re.compile(r"^(" + "|".join(PREFIX_TO_CATEGORY) + r")-(\d{4})$")
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -211,6 +234,34 @@ def validate():
                 errors.append(f"{label}: Qualifies_For cannot reference the record's own ID.")
             else:
                 qualifies_refs.append((label, qualifies))
+
+        # Subject (required): one or more ';'-separated values from the vocabulary.
+        # (An entirely empty Subject is already reported by the required-field check.)
+        subject = row["Subject"]
+        if subject:
+            seen_subjects = set()
+            for part in (p.strip() for p in subject.split(";")):
+                if not part:
+                    errors.append(
+                        f"{label}: Subject has an empty value (check for a stray ';')."
+                    )
+                elif part not in VALID_SUBJECTS:
+                    errors.append(
+                        f"{label}: Subject '{part}' is not in the controlled vocabulary "
+                        f"{sorted(VALID_SUBJECTS)}."
+                    )
+                elif part in seen_subjects:
+                    errors.append(f"{label}: Subject '{part}' is listed more than once.")
+                else:
+                    seen_subjects.add(part)
+
+        # Typical_Window (optional): free text, but kept short for the site pills.
+        window = row["Typical_Window"]
+        if window and len(window) > WINDOW_MAX_LEN:
+            warnings.append(
+                f"{label}: Typical_Window '{window}' is longer than "
+                f"{WINDOW_MAX_LEN} characters."
+            )
 
     # Qualifies_For must point at a record that actually exists (checked after the
     # full pass so a stage may appear before or after the final it feeds into).
