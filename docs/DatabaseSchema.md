@@ -53,7 +53,7 @@ Column order must be preserved unless a documented structural change is made.
 | 16| `Eligibility_Scope`   | enum            | Yes      | Who is eligible by citizenship/residency: `International` (open to students worldwide, including Türkiye), `Türkiye only` (limited to students in Türkiye — e.g. national olympiads and other qualifying stages), or `US only` (limited to U.S. citizens/permanent residents, including U.S. state-restricted programs). Nationality nuances stay in `Eligibility`. |
 | 17| `Qualifies_For`       | string (ID)     | No       | For a national/regional qualifying stage, the `ID` of the international opportunity it feeds into (e.g. `COMP-0001`). Must reference an existing record. Leave empty for stand-alone opportunities. Used by the website to show the local pathway to an international competition. |
 | 18| `Subject`             | enum (multi)    | Yes      | One or more discipline tags from the **Subject Vocabulary** below, independent of `Category`. Multiple values are separated by a semicolon (`;`), e.g. `Physics; Mathematics`. Use `Interdisciplinary` when no single subject fits. |
-| 19| `Typical_Window`      | string          | No       | When the application window typically opens, for records whose exact next date is not yet published (`Application_Deadline = UNKNOWN`). Short month/season text, e.g. `September–October` or `Spring`. Leave empty when a concrete deadline is known. |
+| 19| `Typical_Window`      | string          | No       | The recurring month/season the application is typically due, for records whose exact next date is not yet published (`Application_Deadline = UNKNOWN`). Short text, e.g. `Late May`, `February`, or `Fall`. Leave empty when a concrete deadline is known. |
 
 ---
 

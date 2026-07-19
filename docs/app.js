@@ -383,7 +383,7 @@ function detailHtml(r) {
         : r.Eligibility_Scope === "International" ? "Open to international students, including Türkiye"
         : "", "d-scope")}
       ${detailRow("Application deadline", has(r.Application_Deadline) ? r.Application_Deadline : "", "d-deadline")}
-      ${detailRow("Typically opens", r.Typical_Window, "d-window")}
+      ${detailRow("Typical deadline", r.Typical_Window, "d-window")}
       ${detailRow("Event dates", r.Event_Dates, "d-dates")}
       ${detailRow("Cost", r.Cost, "d-cost")}
       ${detailRow("Format", r.Format, "d-format")}
