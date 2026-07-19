@@ -51,6 +51,7 @@
       <button type="button" class="seg" data-scope="tr">🇹🇷 Türkiye</button>
       <button type="button" class="seg" data-scope="us">🇺🇸 US only</button>
     </div>
+    <button type="button" id="shortlist-view-btn" class="shortlist-btn" aria-pressed="false">☆ My list</button>
   </div>
 
   <!-- Home view: category tiles + a small "closing soon" strip -->
@@ -71,6 +72,11 @@
 
     <h2 class="section-label">Browse by category</h2>
     <div id="category-grid" class="category-grid"></div>
+
+    <section id="subject-section" class="subject-section" hidden aria-label="Browse by subject">
+      <h2 class="section-label">Browse by subject</h2>
+      <div id="subject-cloud" class="subject-cloud"></div>
+    </section>
   </section>
 
   <!-- Browse view: filtered, paginated results -->
@@ -84,7 +90,10 @@
       <p id="result-count" class="result-count" role="status" aria-live="polite"></p>
     </div>
 
-    <section class="controls" aria-label="Filter and sort">
+    <section class="controls" id="controls" aria-label="Filter and sort">
+      <select id="subject-filter" aria-label="Filter by subject">
+        <option value="">All subjects</option>
+      </select>
       <select id="format-filter" aria-label="Filter by format">
         <option value="">All formats</option>
       </select>
@@ -99,6 +108,8 @@
       </select>
       <button type="button" id="clear-filters" class="clear-btn" hidden>Clear filters</button>
     </section>
+
+    <div id="list-actions" class="list-actions" hidden></div>
 
     <div id="cards" class="cards"></div>
     <div class="load-more-wrap">

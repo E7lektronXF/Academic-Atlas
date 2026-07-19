@@ -26,18 +26,58 @@ const state = {
   records: [],
   q: "",
   category: "",
+  subject: "",
   format: "",
   status: "",
   scope: "",
   sort: "deadline",
   id: "",
+  view: "",          // "" = home/browse, "list" = the user's saved shortlist
+  ids: [],           // non-empty when viewing a shared list (?ids=…)
+  shortlist: new Set(),
   shown: PAGE_SIZE,
+};
+
+// --- shortlist (favorites) persistence --------------------------------------
+// Stored client-side only; shared via an explicit ?ids= link, never a server.
+const SHORTLIST_KEY = "aa:shortlist";
+
+function loadShortlist() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(SHORTLIST_KEY));
+    return new Set(Array.isArray(raw) ? raw.filter((x) => typeof x === "string") : []);
+  } catch {
+    return new Set();
+  }
+}
+function saveShortlist() {
+  try {
+    localStorage.setItem(SHORTLIST_KEY, JSON.stringify([...state.shortlist]));
+  } catch { /* storage may be unavailable (private mode); the list just won't persist. */ }
+}
+
+// Discipline vocabulary — kept in sync with docs/DatabaseSchema.md (Subject
+// Vocabulary) and VALID_SUBJECTS in scripts/validate.py. Order drives the
+// "Browse by subject" cloud on the home page.
+const SUBJECT_ORDER = [
+  "Mathematics", "Physics", "Chemistry", "Biology", "Computer Science",
+  "Engineering & Robotics", "Earth & Space", "Environment",
+  "Economics & Business", "Social Sciences & Humanities", "Linguistics",
+  "Writing", "Arts & Design", "Medicine & Health", "Interdisciplinary",
+];
+const SUBJECT_ICON = {
+  "Mathematics": "➗", "Physics": "🧲", "Chemistry": "⚗️", "Biology": "🧬",
+  "Computer Science": "💻", "Engineering & Robotics": "🤖", "Earth & Space": "🔭",
+  "Environment": "🌱", "Economics & Business": "📈",
+  "Social Sciences & Humanities": "🏛️", "Linguistics": "🗣️", "Writing": "✍️",
+  "Arts & Design": "🎨", "Medicine & Health": "⚕️", "Interdisciplinary": "🧩",
 };
 
 const el = {};
 ["home-view","browse-view","scope-bar","closing-soon","closing-soon-cards","category-grid",
  "intro-stats","browse-title","result-count","cards","empty-state","error-state","load-more",
- "search","format-filter","status-filter","sort","clear-filters",
+ "search","subject-filter","format-filter","status-filter","sort","clear-filters",
+ "subject-section","subject-cloud","shortlist-view-btn","list-actions","controls",
  "detail-backdrop","detail-panel","detail-body","detail-close"].forEach((id) => {
   el[id] = document.getElementById(id);
 });
@@ -59,6 +99,23 @@ function safeUrl(value) {
 }
 function has(value) {
   return value && value !== "UNKNOWN";
+}
+
+// A record's Subject cell holds one or more ';'-separated discipline tags.
+function subjectsOf(record) {
+  return String(record.Subject ?? "")
+    .split(";")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+// Small, clickable discipline chips (used on cards and in the detail view).
+function subjectChips(record) {
+  const subs = subjectsOf(record);
+  if (!subs.length) return "";
+  return `<div class="subject-row">` + subs.map((s) =>
+    `<button type="button" class="subject-chip" data-subject="${escapeAttr(s)}" title="Browse ${escapeAttr(s)}">${escapeHtml((SUBJECT_ICON[s] ? SUBJECT_ICON[s] + " " : "") + s)}</button>`
+  ).join("") + `</div>`;
 }
 
 const DAY = 86_400_000;
@@ -84,7 +141,12 @@ function fmtDate(iso) {
 function deadlinePill(record) {
   const info = deadlineInfo(record);
   if (info.kind === "rolling") return pill("open", "🟢 Rolling — open now");
-  if (info.kind === "unknown") return pill("neutral", "🗓 Next cycle — see notes");
+  if (info.kind === "unknown") {
+    // No concrete date yet, but if we know the recurring window, show it.
+    return has(record.Typical_Window)
+      ? pill("window", "🗓 Usually " + record.Typical_Window)
+      : pill("neutral", "🗓 Next cycle — see notes");
+  }
   if (info.kind === "past") return pill("neutral", `Closed ${fmtDate(info.raw)}`);
   const d = info.days;
   const label = d === 0 ? "due today" : `${d} day${d === 1 ? "" : "s"} left`;
@@ -217,10 +279,11 @@ function pathwayHtml(record) {
 function matchesFilters(r) {
   const q = state.q.trim().toLowerCase();
   const matchesSearch = !q ||
-    [r.Name, r.Organizer, r.Description, r.Category, r.Country_Region, r.Eligibility]
+    [r.Name, r.Organizer, r.Description, r.Category, r.Country_Region, r.Eligibility, r.Subject]
       .filter(Boolean).some((f) => String(f).toLowerCase().includes(q));
   return matchesSearch && scopeMatches(r) &&
     (!state.category || r.Category === state.category) &&
+    (!state.subject || subjectsOf(r).includes(state.subject)) &&
     (!state.format || r.Format === state.format) &&
     (!state.status || r.Status === state.status);
 }
@@ -245,6 +308,18 @@ function categoryBadge(category) {
   return `<span class="badge" data-category="${escapeAttr(category)}">${escapeHtml((meta.icon ? meta.icon + " " : "") + category)}</span>`;
 }
 
+// ⭐ toggle for the shortlist. `big` renders the labelled variant used in the
+// detail panel; the compact icon-only variant sits in the corner of each card.
+function starButton(r, big = false) {
+  const saved = state.shortlist.has(r.ID);
+  const label = saved ? "Remove from my list" : "Save to my list";
+  const cls = "star-btn" + (saved ? " is-saved" : "") + (big ? " star-btn-lg" : "");
+  const face = saved ? "★" : "☆";
+  const text = big ? ` <span>${saved ? "Saved" : "Save to list"}</span>` : "";
+  return `<button type="button" class="${cls}" data-star="${escapeAttr(r.ID)}"
+      aria-pressed="${saved}" aria-label="${escapeAttr(label)}" title="${escapeAttr(label)}">${face}${text}</button>`;
+}
+
 function cardHtml(r) {
   const pathwayCls = has(r.Qualifies_For) ? " is-pathway" : "";
   return `
@@ -252,10 +327,14 @@ function cardHtml(r) {
              aria-label="${escapeAttr(r.Name)} — view details">
       <div class="card-top">
         <h3>${escapeHtml(r.Name)}</h3>
-        ${categoryBadge(r.Category)}
+        <div class="card-top-right">
+          ${starButton(r)}
+          ${categoryBadge(r.Category)}
+        </div>
       </div>
       <p class="organizer">${escapeHtml(r.Organizer)} · ${escapeHtml(r.Country_Region)}</p>
       <p class="description">${escapeHtml(r.Description)}</p>
+      ${subjectChips(r)}
       <div class="pill-row">
         ${scopePill(r)}
         ${pathwayPill(r)}
@@ -292,7 +371,11 @@ function detailHtml(r) {
     <div class="detail-pills">
       ${scopePill(r)} ${deadlinePill(r)} ${statusPill(r)} ${formatPill(r)} ${costPill(r)}
     </div>
+    <div class="detail-actions">
+      ${starButton(r, true)}
+    </div>
     <p class="detail-desc">${escapeHtml(r.Description)}</p>
+    ${subjectChips(r)}
     <div class="detail-grid">
       ${detailRow("Eligibility", r.Eligibility, "d-eligibility")}
       ${detailRow("Who can apply",
@@ -300,6 +383,7 @@ function detailHtml(r) {
         : r.Eligibility_Scope === "International" ? "Open to international students, including Türkiye"
         : "", "d-scope")}
       ${detailRow("Application deadline", has(r.Application_Deadline) ? r.Application_Deadline : "", "d-deadline")}
+      ${detailRow("Typically opens", r.Typical_Window, "d-window")}
       ${detailRow("Event dates", r.Event_Dates, "d-dates")}
       ${detailRow("Cost", r.Cost, "d-cost")}
       ${detailRow("Format", r.Format, "d-format")}
@@ -318,9 +402,93 @@ function detailHtml(r) {
 function render() {
   el["error-state"].hidden = true;
   el["scope-bar"].hidden = false;
-  const browsing = Boolean(state.q || state.category || state.format || state.status);
-  if (browsing) renderBrowse(); else renderHome();
+  syncShortlistBtn();
+
+  if (state.ids.length) renderShared();
+  else if (state.view === "list") renderList();
+  else if (state.q || state.category || state.subject || state.format || state.status) renderBrowse();
+  else renderHome();
+
   renderDetail();
+}
+
+// Reflects the saved count on the "My list" button and marks it active in-view.
+function syncShortlistBtn() {
+  const btn = el["shortlist-view-btn"];
+  if (!btn) return;
+  const n = state.shortlist.size;
+  const active = state.view === "list";
+  btn.textContent = (active ? "★" : "☆") + ` My list${n ? ` (${n})` : ""}`;
+  btn.classList.toggle("active", active);
+  btn.setAttribute("aria-pressed", String(active));
+}
+
+// Shared filler for the browse/list/shared result views.
+function showResults(results, { title, mode, emptyText }) {
+  el["home-view"].hidden = true;
+  el["browse-view"].hidden = false;
+  el["browse-title"].textContent = title;
+
+  // The filter/sort controls only make sense while actually filtering.
+  if (el["controls"]) el["controls"].hidden = mode !== "browse";
+
+  const slice = results.slice(0, state.shown);
+  el["cards"].innerHTML = slice.map(cardHtml).join("");
+  el["empty-state"].hidden = results.length !== 0;
+  el["empty-state"].textContent = emptyText || "No opportunities match your filters.";
+  el["result-count"].textContent =
+    `${results.length} ${results.length === 1 ? "opportunity" : "opportunities"}` +
+    (results.length > slice.length ? ` · showing ${slice.length}` : "");
+  el["load-more"].hidden = results.length <= slice.length;
+
+  const filtersActive = mode === "browse" &&
+    Boolean(state.q || state.subject || state.format || state.status);
+  el["clear-filters"].hidden = !filtersActive;
+
+  renderListActions(mode, results);
+}
+
+// The action bar under the title for the list/shared views.
+function renderListActions(mode, results) {
+  const box = el["list-actions"];
+  if (!box) return;
+  if (mode === "list" && results.length) {
+    box.hidden = false;
+    box.innerHTML =
+      `<button type="button" id="share-list-btn" class="list-action-btn">🔗 Copy share link</button>` +
+      `<span class="list-action-note">${results.length} saved — this list lives in this browser.</span>`;
+  } else if (mode === "shared") {
+    box.hidden = false;
+    box.innerHTML =
+      `<button type="button" id="add-all-btn" class="list-action-btn">☆ Add all to my list</button>` +
+      `<span class="list-action-note">Someone shared this list with you.</span>`;
+  } else {
+    box.hidden = true;
+    box.innerHTML = "";
+  }
+}
+
+function renderList() {
+  const results = state.records
+    .filter((r) => state.shortlist.has(r.ID))
+    .sort(SORTERS[state.sort] || SORTERS.deadline);
+  showResults(results, {
+    title: "⭐ My list",
+    mode: "list",
+    emptyText: "Your list is empty. Tap the ☆ on any opportunity to save it here.",
+  });
+}
+
+function renderShared() {
+  const order = new Map(state.ids.map((id, i) => [id, i]));
+  const results = state.records
+    .filter((r) => order.has(r.ID))
+    .sort((a, b) => order.get(a.ID) - order.get(b.ID));
+  showResults(results, {
+    title: "🔗 Shared list",
+    mode: "shared",
+    emptyText: "This shared list is empty, or its opportunities are no longer in the database.",
+  });
 }
 
 function renderHome() {
@@ -353,6 +521,24 @@ function renderHome() {
       </a>`;
   }).join("");
 
+  // Subject cloud — discipline tags present in the current scope, with counts.
+  if (el["subject-section"] && el["subject-cloud"]) {
+    const subjCounts = {};
+    inScope.forEach((r) => subjectsOf(r).forEach((s) => {
+      subjCounts[s] = (subjCounts[s] || 0) + 1;
+    }));
+    const present = SUBJECT_ORDER.filter((s) => subjCounts[s]);
+    if (present.length) {
+      el["subject-section"].hidden = false;
+      el["subject-cloud"].innerHTML = present.map((s) =>
+        `<button type="button" class="subject-chip subject-chip-lg" data-subject="${escapeAttr(s)}">` +
+        `${escapeHtml((SUBJECT_ICON[s] ? SUBJECT_ICON[s] + " " : "") + s)}` +
+        `<span class="subject-count">${subjCounts[s]}</span></button>`).join("");
+    } else {
+      el["subject-section"].hidden = true;
+    }
+  }
+
   // "Closing soon": nearest upcoming concrete deadlines (max 3), within scope.
   const soon = inScope
     .map((r) => ({ r, info: deadlineInfo(r) }))
@@ -368,26 +554,13 @@ function renderHome() {
 }
 
 function renderBrowse() {
-  el["home-view"].hidden = true;
-  el["browse-view"].hidden = false;
-
   const results = currentResults();
   const title = state.category
     ? `${CATEGORY_META[state.category]?.icon || ""} ${state.category}`.trim()
+    : state.subject
+    ? `${SUBJECT_ICON[state.subject] ? SUBJECT_ICON[state.subject] + " " : ""}${state.subject}`.trim()
     : state.q ? `Search: “${state.q}”` : "All opportunities";
-  el["browse-title"].textContent = title;
-
-  const slice = results.slice(0, state.shown);
-  el["cards"].innerHTML = slice.map(cardHtml).join("");
-  el["empty-state"].hidden = results.length !== 0;
-  el["result-count"].textContent =
-    `${results.length} ${results.length === 1 ? "opportunity" : "opportunities"}` +
-    (results.length > slice.length ? ` · showing ${slice.length}` : "");
-
-  el["load-more"].hidden = results.length <= slice.length;
-
-  const filtersActive = Boolean(state.q || state.format || state.status);
-  el["clear-filters"].hidden = !filtersActive;
+  showResults(results, { title, mode: "browse" });
 }
 
 function renderDetail() {
@@ -414,11 +587,15 @@ function readUrl() {
   const p = new URLSearchParams(location.search);
   state.q = p.get("q") || "";
   state.category = p.get("category") || "";
+  state.subject = p.get("subject") || "";
   state.format = p.get("format") || "";
   state.status = p.get("status") || "";
   state.scope = ["intl", "tr", "us"].includes(p.get("scope")) ? p.get("scope") : "";
   state.sort = SORTERS[p.get("sort")] ? p.get("sort") : "deadline";
   state.id = p.get("id") || "";
+  state.view = p.get("view") === "list" ? "list" : "";
+  const idsRaw = p.get("ids") || "";
+  state.ids = idsRaw ? idsRaw.split(",").map((s) => s.trim()).filter(Boolean) : [];
   state.shown = PAGE_SIZE;
 }
 
@@ -426,11 +603,14 @@ function writeUrl(push = false) {
   const p = new URLSearchParams();
   if (state.q) p.set("q", state.q);
   if (state.category) p.set("category", state.category);
+  if (state.subject) p.set("subject", state.subject);
   if (state.format) p.set("format", state.format);
   if (state.status) p.set("status", state.status);
   if (state.scope) p.set("scope", state.scope);
   if (state.sort && state.sort !== "deadline") p.set("sort", state.sort);
   if (state.id) p.set("id", state.id);
+  if (state.view === "list") p.set("view", "list");
+  if (state.ids.length) p.set("ids", state.ids.join(","));
   const qs = p.toString();
   const url = qs ? `?${qs}` : location.pathname;
   if (push) history.pushState(null, "", url);
@@ -439,6 +619,7 @@ function writeUrl(push = false) {
 
 function syncControls() {
   el["search"].value = state.q;
+  el["subject-filter"].value = state.subject;
   el["format-filter"].value = state.format;
   el["status-filter"].value = state.status;
   el["sort"].value = state.sort;
@@ -467,11 +648,69 @@ function openDetailById(id) {
   renderDetail();
 }
 
+// Jump to a single-subject browse view (from a chip on a card/detail/home).
+function goToSubject(subject) {
+  Object.assign(state, {
+    q: "", category: "", subject, format: "", status: "",
+    view: "", ids: [], id: "", shown: PAGE_SIZE,
+  });
+  closeDetail(false);
+  writeUrl(true); syncControls(); render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// Open the user's saved shortlist.
+function enterListView() {
+  Object.assign(state, {
+    q: "", category: "", subject: "", format: "", status: "",
+    view: "list", ids: [], id: "", shown: PAGE_SIZE,
+  });
+  closeDetail(false);
+  writeUrl(true); syncControls(); render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// Star/unstar a record and refresh anything showing its state.
+function toggleShortlist(id) {
+  if (state.shortlist.has(id)) state.shortlist.delete(id);
+  else state.shortlist.add(id);
+  saveShortlist();
+  render();
+}
+
+// Copy a shareable ?ids= link for the current saved list.
+async function shareCurrentList() {
+  const ids = state.records.filter((r) => state.shortlist.has(r.ID)).map((r) => r.ID);
+  if (!ids.length) return;
+  const url = `${location.origin}${location.pathname}?ids=${ids.join(",")}`;
+  const btn = document.getElementById("share-list-btn");
+  try {
+    await navigator.clipboard.writeText(url);
+    if (btn) { btn.textContent = "✓ Link copied"; setTimeout(render, 1600); }
+  } catch {
+    // Clipboard blocked — surface the link in the address bar instead.
+    history.replaceState(null, "", `?ids=${ids.join(",")}`);
+    if (btn) btn.textContent = "Link in address bar ↑";
+  }
+}
+
+// Merge a shared list (?ids=…) into the user's own saved list.
+function addSharedToList() {
+  state.ids.forEach((id) => {
+    if (state.records.some((r) => r.ID === id)) state.shortlist.add(id);
+  });
+  saveShortlist();
+  enterListView();
+}
+
 function wireEvents() {
   el["search"].addEventListener("input", debounce((e) => {
     state.q = e.target.value; state.shown = PAGE_SIZE; writeUrl(); render();
   }, 150));
 
+  el["subject-filter"].addEventListener("change", (e) => {
+    state.subject = e.target.value; state.shown = PAGE_SIZE; writeUrl(); render();
+  });
   el["format-filter"].addEventListener("change", (e) => {
     state.format = e.target.value; state.shown = PAGE_SIZE; writeUrl(); render();
   });
@@ -482,12 +721,13 @@ function wireEvents() {
     state.sort = e.target.value; writeUrl(); render();
   });
   el["clear-filters"].addEventListener("click", () => {
-    state.q = state.format = state.status = ""; state.shown = PAGE_SIZE;
+    state.q = state.subject = state.format = state.status = ""; state.shown = PAGE_SIZE;
     syncControls(); writeUrl(); render();
   });
   el["load-more"].addEventListener("click", () => {
-    state.shown += PAGE_SIZE; renderBrowse();
+    state.shown += PAGE_SIZE; render();
   });
+  el["shortlist-view-btn"].addEventListener("click", enterListView);
 
   document.querySelectorAll(".seg").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -499,6 +739,18 @@ function wireEvents() {
 
   // Card click / keyboard (event delegation across both card containers).
   document.addEventListener("click", (e) => {
+    // Star toggle (on cards and in the detail panel) — must not open the card.
+    const star = e.target.closest(".star-btn[data-star]");
+    if (star) { e.preventDefault(); e.stopPropagation(); toggleShortlist(star.dataset.star); return; }
+
+    // Subject chip — filter by discipline instead of opening the card.
+    const chip = e.target.closest(".subject-chip[data-subject]");
+    if (chip) { e.preventDefault(); e.stopPropagation(); goToSubject(chip.dataset.subject); return; }
+
+    // List-view action buttons.
+    if (e.target.closest("#share-list-btn")) { e.preventDefault(); shareCurrentList(); return; }
+    if (e.target.closest("#add-all-btn")) { e.preventDefault(); addSharedToList(); return; }
+
     const link = e.target.closest("a");
     if (link && link.matches(".cat-tile, .brand, .crumbs a")) {
       e.preventDefault();
@@ -525,6 +777,8 @@ function wireEvents() {
 }
 
 function cardKeydown(e) {
+  // Let the inner star / subject buttons handle their own keys.
+  if (e.target.closest(".star-btn, .subject-chip")) return;
   const card = e.target.closest(".card[data-id]");
   if (card && (e.key === "Enter" || e.key === " ")) {
     e.preventDefault();
@@ -557,6 +811,16 @@ async function init() {
 
   records.forEach((r) => { r._verifiedTime = Date.parse(r.Last_Verified) || 0; });
   state.records = records;
+  state.shortlist = loadShortlist();
+
+  // Subject filter — vocabulary order, only values actually present.
+  const presentSubjects = new Set();
+  records.forEach((r) => subjectsOf(r).forEach((s) => presentSubjects.add(s)));
+  SUBJECT_ORDER.filter((s) => presentSubjects.has(s)).forEach((s) => {
+    const o = document.createElement("option");
+    o.value = s; o.textContent = s;
+    el["subject-filter"].appendChild(o);
+  });
 
   populate(el["format-filter"], new Set(records.map((r) => r.Format)));
   populate(el["status-filter"], new Set(records.map((r) => r.Status)));

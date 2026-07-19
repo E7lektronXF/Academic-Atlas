@@ -366,6 +366,7 @@ select, .clear-btn {
 .pill-tr      { --pc: var(--accent-2); }
 .pill-us      { --pc: #a8621f; }
 .pill-pathway { --pc: var(--accent); }
+.pill-window  { --pc: #4a6b8a; }
 
 @media (prefers-color-scheme: dark) {
   .pill-urgent  { --pc: #ef8a99; }
@@ -377,6 +378,7 @@ select, .clear-btn {
   .pill-inperson{ --pc: #8f9fe6; }
   .pill-hybrid  { --pc: #e69bc0; }
   .pill-us      { --pc: #dba066; }
+  .pill-window  { --pc: #9fb8d4; }
 }
 
 /* ---------- National pathway (Qualifies_For) ---------- */
@@ -516,6 +518,104 @@ select, .clear-btn {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* ---------- Subjects (discipline tags) ---------- */
+.subject-section { margin-top: 0.4rem; }
+.subject-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.subject-row {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  margin: 0.1rem 0 0.15rem;
+}
+.subject-chip {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font: inherit; font-size: 0.75rem; font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
+  white-space: nowrap;
+  transition: background 0.14s ease, border-color 0.14s ease;
+}
+.subject-chip:hover {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  border-color: var(--accent);
+}
+.subject-chip-lg { font-size: 0.85rem; padding: 0.35rem 0.8rem; }
+.subject-count {
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  border-radius: 999px;
+  padding: 0 0.35rem;
+}
+
+/* ---------- Shortlist (favorites) ---------- */
+.shortlist-btn {
+  margin-left: auto;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font: inherit; font-size: 0.85rem; font-weight: 600;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.shortlist-btn:hover { border-color: var(--accent-2); color: var(--accent-2); }
+.shortlist-btn.active {
+  border-color: var(--accent-2);
+  color: var(--accent-2);
+  background: color-mix(in srgb, var(--accent-2) 10%, var(--card-bg));
+}
+
+.card-top-right { display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0; }
+.star-btn {
+  border: none; background: transparent; cursor: pointer;
+  font-size: 1.15rem; line-height: 1;
+  padding: 0.05rem 0.15rem;
+  color: var(--text-muted);
+  border-radius: 6px;
+  transition: color 0.14s ease, transform 0.14s ease;
+}
+.star-btn:hover { color: var(--accent-2); transform: scale(1.12); }
+.star-btn.is-saved { color: var(--accent-2); }
+
+/* Labelled variant inside the detail panel. */
+.detail-actions { margin: 0.2rem 0 0.2rem; }
+.star-btn-lg {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.88rem; font-weight: 600;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  color: var(--text);
+}
+.star-btn-lg:hover { border-color: var(--accent-2); color: var(--accent-2); transform: none; }
+.star-btn-lg.is-saved {
+  border-color: var(--accent-2);
+  color: var(--accent-2);
+  background: color-mix(in srgb, var(--accent-2) 10%, var(--card-bg));
+}
+
+/* ---------- List / shared-list actions ---------- */
+.list-actions {
+  display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap;
+  margin: 0.1rem 0 1.1rem;
+}
+.list-action-btn {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font: inherit; font-weight: 600; font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.list-action-btn:hover { border-color: var(--accent); color: var(--accent); }
+.list-action-note { font-size: 0.82rem; color: var(--text-muted); }
 
 /* ---------- Footer ---------- */
 .site-footer {
