@@ -6,6 +6,28 @@ This project follows Semantic Versioning (`MAJOR.MINOR.PATCH`).
 
 ---
 
+## [0.8.0] - 2026-07-19
+
+### Added
+
+* **Subject taxonomy.** New required schema column `Subject` (column 18) tags every record with one or more academic disciplines from a 15-value controlled vocabulary (`Mathematics`, `Physics`, … `Interdisciplinary`), independent of `Category` and separated by `;`. Documented in `docs/DatabaseSchema.md` and enforced by `scripts/validate.py` (unknown-value, duplicate, and stray-separator checks). All 53 existing records were tagged; national qualifying stages carry the same subject(s) as the international final they feed into.
+* **`Typical_Window`.** New optional column `Typical_Window` (column 19) records the recurring month/season an application is usually due, for opportunities whose exact next date is not yet published — so the website can show "Usually <window>" instead of a bare "see notes".
+* 7 new verified opportunities (53 → 60): the mentored online research programs **Polygence**, **Lumiere Research Scholar Program** and **Horizon Academic Research Program**; the **Berkeley Model UN (BMUN)** and **National High School Model UN (NHSMUN)** conferences; and two Türkiye programs — the **TEKNOFEST Aerospace and Technology Festival** and the free **DENEYAP Technology Workshops** (Türkiye only). Each was verified against its official source.
+* Website: **browse by subject** — a subject chip cloud on the home page, a subject filter in the browse toolbar, and clickable discipline chips on every card and in the detail view (shareable via `?subject=`; search now also matches `Subject`).
+* Website: a **saved shortlist** — a ☆/★ toggle on cards and in the detail panel, persisted in the browser (`localStorage`), with a "My list" view and a `?ids=` link to share a list (the recipient can add all of it to their own list).
+* Website: a **Typical deadline** pill and detail row driven by `Typical_Window`.
+
+### Changed
+
+* Verification sweep (2026-07-19): re-verified the upcoming-cycle deadlines for Regeneron STS, QuestBridge, Coca-Cola Scholars, The Gates Scholarship, Breakthrough Junior and The Concord Review (so the "Closing soon" strip reflects real dates), and filled `Typical_Window` for John Locke (Late May), COSMOS (February) and GENIUS Olympiad (Early March). Summer-2027 programs whose next cycle is not yet published were left `UNKNOWN` rather than guessed.
+* `CONTRIBUTING.md` and `AI_CONTEXT.md` updated for the `Subject` requirement and vocabulary.
+
+### Notes
+
+`database/AcademicAtlas.xlsx` remains the single source of truth; `docs/data.json` was regenerated with `scripts/xlsx_to_json.py` and passes `scripts/validate.py` (60 records). The `roadmap/v0.8.0.md` plan tracked this release; the scheduled staleness-reminder GitHub Action and further data growth toward ~68 records are deferred to v0.9.0. No existing verified record was removed or altered.
+
+---
+
 ## [0.7.0] - 2026-07-18
 
 ### Added

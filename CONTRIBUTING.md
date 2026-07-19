@@ -15,7 +15,7 @@ Thank you for considering a contribution. Academic Atlas prioritizes accuracy an
 1. Verify the opportunity against an **official source** (organizer, university, or official documentation — see README → Data Sources). Third-party aggregators are not acceptable as the sole source.
 2. Open `database/AcademicAtlas.xlsx`.
 3. Assign the next sequential `ID` for its category (see the prefix table in `docs/DatabaseSchema.md`).
-4. Fill in every required column. Use `UNKNOWN` instead of guessing.
+4. Fill in every required column. Use `UNKNOWN` instead of guessing. Tag `Subject` with one or more values from the controlled vocabulary in `docs/DatabaseSchema.md` (semicolon-separated; use `Interdisciplinary` when no single discipline fits).
 5. Set `Last_Verified` to the date you confirmed the information.
 6. Do not reorder, rename, or remove existing columns.
 7. Install the tooling once with `pip install -r scripts/requirements.txt`.
@@ -43,6 +43,7 @@ If you notice incorrect, outdated, or unverifiable data but aren't able to fix i
 * [ ] All required columns from `docs/DatabaseSchema.md` are filled.
 * [ ] `ID` follows the correct prefix and is not reused.
 * [ ] Dates use `YYYY-MM-DD`, or `Rolling`/`UNKNOWN` where explicitly allowed.
+* [ ] `Subject` uses one or more values from the controlled vocabulary in `docs/DatabaseSchema.md` (semicolon-separated).
 * [ ] `Last_Verified` is set.
 * [ ] No existing verified rows were removed or altered without justification.
 * [ ] `python scripts/validate.py` passes with no errors.

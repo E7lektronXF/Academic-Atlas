@@ -10,6 +10,8 @@ The project focuses on quality over quantity and prioritizes official, up-to-dat
 
 **Browse the database:** https://e7lektronxf.github.io/Academic-Atlas/
 
+Filter by category, **subject** (Mathematics, Physics, Computer Science, …), or eligibility, and save opportunities to a personal shortlist you can share with a link.
+
 ---
 
 ## What is included?
@@ -78,6 +80,8 @@ docs/                     (also serves as the GitHub Pages website)
 scripts/
     xlsx_to_json.py       (regenerates docs/data.json)
     validate.py           (checks the database against DatabaseSchema.md)
+
+roadmap/                  (per-release planning notes, e.g. v0.8.0.md)
 ```
 
 Data integrity is enforced automatically: `scripts/validate.py` checks every record against the schema, and a GitHub Actions workflow (`.github/workflows/data-check.yml`) re-runs it on each pull request and confirms `docs/data.json` is regenerated from the spreadsheet.
@@ -116,7 +120,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/DatabaseSchema.md`](docs/Dat
 
 ## Project Status
 
-Current Version: **v0.7.0**
+Current Version: **v0.8.0**
 
 Current Phase: **Foundation**
 

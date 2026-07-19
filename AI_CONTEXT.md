@@ -74,6 +74,8 @@ General standards include:
 * Use `UNKNOWN` instead of guessing missing information.
 * Preserve column order unless a documented structural change is made.
 * Link national/regional qualifying stages to their international final with `Qualifies_For`, and mark them `Eligibility_Scope = Türkiye only` (see `docs/DatabaseSchema.md` → Qualifying Stages).
+* Tag every record with one or more `Subject` values from the controlled vocabulary in `docs/DatabaseSchema.md` (semicolon-separated); use `Interdisciplinary` when no single discipline fits.
+* When the exact next application date is not yet published, leave `Application_Deadline` as `UNKNOWN` but record the recurring month/season in `Typical_Window` if the official source states it.
 
 ---
 
